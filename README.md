@@ -15,4 +15,30 @@ Phisko's metaprogramming utilities.
 * [members](member.mds): type_traits and functions for inspecting type members
 * [nameof](nameof.md): macro to mimick other languages' `nameof`
 * [new_from_tuple](new_from_tuple.md): a make_from_tuple that creates a heap-based object
-* [traits](traits.md): type_traits
+
+## Type traits
+
+* [has_member](traits/has_memer.md)
+* [has_nested_type](traits/has_nested_type.md)
+* [indexed_type](traits/indexed_type.md)
+* [is_indexable](traits/is_indexable.md)
+* [is_iterable](traits/is_iterable.md)
+* [is_specialization](traits/is_specialization.md)
+* [is_streamable](traits/is_streamable.md)
+* [is_unstreamable](traits/is_unstreamable.md)
+
+### Function traits
+
+* [is_function](traits/is_function.md)
+* [function_signature](traits/function_signature.md)
+* [function_arguments](traits/function_arguments.md)
+* [function_return_type](traits/function_return_type.md)
+
+### Member function traits
+
+* [is_member_function_ptr](traits/is_member_function_ptr.md)
+* [member_function_signature](traits/member_function_signature.md)
+* [member_function_arguments](traits/member_function_arguments.md)
+* [member_function_return_type](traits/member_function_return_type.md)
+
+
