@@ -1,6 +1,7 @@
 #pragma once
 
 #include <type_traits>
+#include <iterator>
 
 namespace putils {
   	namespace detail {
