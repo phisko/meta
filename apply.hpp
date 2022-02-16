@@ -1,6 +1,5 @@
 #pragma once
 
-#include <functional>
 #include <type_traits>
 
 namespace putils {
@@ -12,7 +11,12 @@ namespace putils {
     }
 
     template<typename F, typename ...Args>
-    std::result_of_t<F(Args...)> apply(const std::tuple<Args...> & tuple, F && f) noexcept {
+    decltype(auto) apply(const std::tuple<Args...> & tuple, F && f) noexcept {
+        return apply(std::forward<F>(f), tuple, std::index_sequence_for<Args...>());
+    }
+
+    template<typename F, typename ...Args>
+    decltype(auto) apply(std::tuple<Args...> & tuple, F && f) noexcept {
         return apply(std::forward<F>(f), tuple, std::index_sequence_for<Args...>());
     }
 }
