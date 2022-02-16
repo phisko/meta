@@ -20,5 +20,5 @@ template<typename T>
 const putils::meta::type_index putils::meta::type<T>::index = std::hash<std::type_index>()(std::type_index(typeid(T)));
 
 template<typename T>
-bool operator==(putils::meta::type<T>, putils::meta::type<T>) noexcept { return true; }
+constexpr bool operator==(putils::meta::type<T>, putils::meta::type<T>) noexcept { return true; }
 
