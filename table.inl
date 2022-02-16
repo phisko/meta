@@ -20,28 +20,32 @@ namespace putils {
 
     namespace detail {
     	template<typename T>
-    	bool isEqual(const T & lhs, const T & rhs) noexcept {
+    	constexpr bool isEqual(const T & lhs, const T & rhs) noexcept {
     		return lhs == rhs;
     	}
 
+        inline constexpr bool isEqualStrings(std::string_view lhs, std::string_view rhs) noexcept {
+            return lhs == rhs;
+        }
+
     	template<>
-    	inline bool isEqual(const char * const & lhs, const char * const & rhs) noexcept {
-    		return strcmp(lhs, rhs) == 0;
+    	inline constexpr bool isEqual(const char * const & lhs, const char * const & rhs) noexcept {
+            return isEqualStrings(lhs, rhs);
     	}
 
     	template<size_t N, size_t N2>
-    	inline bool isEqual(const char (&lhs)[N], const char (&rhs)[N2]) noexcept {
-    		return strcmp(lhs, rhs) == 0;
+    	inline constexpr bool isEqual(const char (&lhs)[N], const char (&rhs)[N2]) noexcept {
+            return isEqualStrings(lhs, rhs);
     	}
 
 		template<size_t N>
-		inline bool isEqual(const char (&lhs)[N], const char * const & rhs) noexcept {
-			return strcmp(lhs, rhs) == 0;
+		inline constexpr bool isEqual(const char (&lhs)[N], const char * const & rhs) noexcept {
+            return isEqualStrings(lhs, rhs);
 		}
 
 		template<size_t N>
-		inline bool isEqual(const char * const & lhs, const char (&rhs)[N]) noexcept {
-			return strcmp(lhs, rhs) == 0;
+		inline constexpr bool isEqual(const char * const & lhs, const char (&rhs)[N]) noexcept {
+            return isEqualStrings(lhs, rhs);
 		}
 
         template<bool ShouldAssert, std::size_t KPos, std::size_t VPos, typename Key, typename Table, typename Func, std::size_t ...Is>
@@ -92,7 +96,8 @@ namespace putils {
 	constexpr FinalReturn * try_get_value(Table && table, Key && key) noexcept {
 		FinalReturn * ret = nullptr;
 		try_get_value(FWD(table), FWD(key), [&](auto && value) noexcept {
-			ret = &value;
+            if constexpr (std::is_same_v<decltype(ret), decltype(&value)>)
+                ret = &value;
 		});
 		return ret;
 	}
@@ -106,7 +111,8 @@ namespace putils {
     constexpr FinalReturn & get_value(Table && table, Key && key) noexcept {
         FinalReturn * ret = nullptr;
         get_value(FWD(table), FWD(key), [&](auto && value) noexcept {
-            ret = &value;
+            if constexpr (std::is_same_v<decltype(ret), decltype(&value)>)
+                ret = &value;
         });
         return *ret;
     }
