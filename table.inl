@@ -172,8 +172,8 @@ namespace putils {
 		}
 	}
 
-    template<typename ...Args>
-    constexpr auto make_table(Args && ...args) noexcept {
-        return detail::make_table(args...);
+    template<typename ... KeyValues>
+    constexpr auto make_table(KeyValues && ... keyValues) noexcept {
+        return detail::make_table(FWD(keyValues)...);
     }
 }

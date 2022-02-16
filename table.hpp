@@ -10,7 +10,7 @@ namespace putils {
     using table = std::tuple<KeyValues...>;
 
     template<typename ...KeyValues>
-    constexpr auto make_table(KeyValues && ...keyValues) noexcept;
+    constexpr auto make_table(KeyValues && ... keyValues) noexcept;
 
     // Index with key
     template<typename Table, typename Key>
@@ -31,7 +31,7 @@ namespace putils {
 
     // Index with value
     template<typename Table, typename Value>
-    constexpr void has_value(Table && table, Value && value) noexcept;
+    constexpr bool has_value(Table && table, Value && value) noexcept;
 
     template<typename Ret, typename Table, typename Value, typename FinalReturn = std::conditional_t<std::is_const_v<std::remove_reference_t<Table>>, const Ret, Ret>>
     constexpr FinalReturn & get_key(Table && table, Value && value) noexcept;
