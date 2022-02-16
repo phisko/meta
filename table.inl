@@ -59,7 +59,7 @@ namespace putils {
 
         template<bool ShouldAssert, std::size_t KPos, std::size_t VPos, typename Key, typename Table, typename Func, std::size_t I, std::size_t ...Is>
         constexpr void get_value(Key && key, Table && table, Func && func, std::index_sequence<I, Is...>) noexcept {
-            const auto & pair = std::get<I>(table);
+            auto && pair = std::get<I>(table);
 
 			using KeyType = putils_typeof(std::get<KPos>(pair));
 			if constexpr (std::is_same<KeyType, putils_typeof(key)>::value) {
@@ -69,11 +69,16 @@ namespace putils {
 				}
 			}
 
-            get_value<ShouldAssert, KPos, VPos>(key, table, func, std::index_sequence<Is...>());
+            get_value<ShouldAssert, KPos, VPos>(FWD(key), FWD(table), FWD(func), std::index_sequence<Is...>());
         }
 
         template<bool ShouldAssert, std::size_t KPos, std::size_t VPos, typename Key, typename Func, typename ...Pairs>
         constexpr void get_value(Key && key, const std::tuple<Pairs...> & table, Func && func) noexcept {
+            get_value<ShouldAssert, KPos, VPos>(FWD(key), table, FWD(func), std::index_sequence_for<Pairs...>());
+        }
+
+        template<bool ShouldAssert, std::size_t KPos, std::size_t VPos, typename Key, typename Func, typename ...Pairs>
+        constexpr void get_value(Key && key, std::tuple<Pairs...> & table, Func && func) noexcept {
             get_value<ShouldAssert, KPos, VPos>(FWD(key), table, FWD(func), std::index_sequence_for<Pairs...>());
         }
     }
@@ -89,7 +94,7 @@ namespace putils {
 
 	template<typename Table, typename Key, typename Func>
 	constexpr void try_get_value(Table && table, Key && key, Func && func) noexcept {
-		detail::get_value<false, detail::KeyPos, detail::ValuePos>(FWD(key), table, FWD(func));
+		detail::get_value<false, detail::KeyPos, detail::ValuePos>(FWD(key), FWD(table), FWD(func));
 	}
 
 	template<typename Ret, typename Table, typename Key, typename FinalReturn>
@@ -104,7 +109,7 @@ namespace putils {
 
     template<typename Table, typename Key, typename Func>
     constexpr void get_value(Table && table, Key && key, Func && func) noexcept {
-        detail::get_value<true, detail::KeyPos, detail::ValuePos>(FWD(key), table, FWD(func));
+        detail::get_value<true, detail::KeyPos, detail::ValuePos>(FWD(key), FWD(table), FWD(func));
     }
 	
     template<typename Ret, typename Table, typename Key, typename FinalReturn>
@@ -128,7 +133,7 @@ namespace putils {
 
 	template<typename Table, typename Value, typename Func>
 	constexpr void try_get_key(Table && table, Value && value, Func && func) noexcept {
-		detail::get_value<false, detail::ValuePos, detail::KeyPos>(FWD(value), table, FWD(func));
+		detail::get_value<false, detail::ValuePos, detail::KeyPos>(FWD(value), FWD(table), FWD(func));
 	}
    
 	template<typename Ret, typename Table, typename Value, typename FinalReturn>
@@ -142,7 +147,7 @@ namespace putils {
 
     template<typename Table, typename Value, typename Func>
     constexpr void get_key(Table && table, Value && value, Func && func) noexcept {
-        detail::get_value<true, detail::ValuePos, detail::KeyPos>(FWD(value), table, FWD(func));
+        detail::get_value<true, detail::ValuePos, detail::KeyPos>(FWD(value), FWD(table), FWD(func));
     }
    
     template<typename Ret, typename Table, typename Value, typename FinalReturn>
