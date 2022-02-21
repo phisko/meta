@@ -10,137 +10,116 @@ public:
     );
 };
 
+TEST_F(ConstexprTableTest, Size) {
+    static_assert(std::tuple_size<decltype(table)>() == 3);
+    SUCCEED();
+}
 TEST_F(ConstexprTableTest, EmptySize) {
     constexpr auto empty = putils::make_table();
     static_assert(std::tuple_size<decltype(empty)>() == 0);
     SUCCEED();
 }
 
-TEST_F(ConstexprTableTest, Size) {
-    static_assert(std::tuple_size<decltype(table)>() == 3);
+TEST_F(ConstexprTableTest, GetKeyValue) {
+    constexpr auto stringName = putils::get_key<const char *>(table, putils::meta::type<const char *>());
+    static_assert(stringName != nullptr);
+    static_assert(*stringName == std::string_view("string"));
+
+    static_assert(*putils::get_key<const char *>(table, putils::meta::type<int>()) == std::string_view("int"));
+    static_assert(*putils::get_key<const char *>(table, putils::meta::type<float>()) == std::string_view("float"));
     SUCCEED();
 }
 
-TEST_F(ConstexprTableTest, HasKeyTrue) {
-    static_assert(putils::has_key(table, "string"));
-    SUCCEED();
-}
-
-TEST_F(ConstexprTableTest, HasKeyFalse) {
-    static_assert(!putils::has_key(table, "foo"));
-    SUCCEED();
-}
-
-TEST_F(ConstexprTableTest, HasValueTrue) {
-    static_assert(putils::has_value(table, putils::meta::type<int>()));
-    SUCCEED();
-}
-
-TEST_F(ConstexprTableTest, HasValueFalse) {
-    static_assert(!putils::has_value(table, "foo"));
+TEST_F(ConstexprTableTest, GetMissingKeyValue) {
+    static_assert(putils::get_key<const char *>(table, putils::meta::type<double>()) == nullptr);
     SUCCEED();
 }
 
 TEST_F(ConstexprTableTest, GetKeyCallback) {
     constexpr auto ret = [] {
-        bool ret = false;
+        bool ret = true;
+
         putils::get_key(table, putils::meta::type<const char *>(), [&](auto && key) {
-            ret = key == std::string_view("string");
+            ret &= key == std::string_view("string");
         });
+
+        putils::get_key(table, putils::meta::type<int>(), [&](auto && key) {
+            ret &= key == std::string_view("int");
+        });
+
+        putils::get_key(table, putils::meta::type<float>(), [&](auto && key) {
+            ret &= key == std::string_view("float");
+        });
+
         return ret;
     }();
     static_assert(ret);
     SUCCEED();
 }
 
-TEST_F(ConstexprTableTest, TryGetKeyCallback) {
+TEST_F(ConstexprTableTest, GetMissingKeyCallback) {
     constexpr auto ret = [] {
-        bool ret = false;
-        putils::get_key(table, putils::meta::type<const char *>(), [&](auto && key) {
-            ret = key == std::string_view("string");
+        bool found = false;
+        putils::get_key(table, "foo", [&](auto &&) {
+            found = true;
         });
-        return ret;
-    }();
-    static_assert(ret);
-    SUCCEED();
-}
-
-TEST_F(ConstexprTableTest, GetKeyValue) {
-    constexpr auto & key = putils::get_key<const char *>(table, putils::meta::type<const char *>());
-    static_assert(key == std::string_view("string"));
-    SUCCEED();
-}
-
-TEST_F(ConstexprTableTest, TryGetKeyValue) {
-    constexpr auto & key = *putils::try_get_key<const char *>(table, putils::meta::type<const char *>());
-    static_assert(key == std::string_view("string"));
-    SUCCEED();
-}
-
-TEST_F(ConstexprTableTest, GetValueCallback) {
-    constexpr auto ret = [] {
-        bool ret = false;
-        putils::get_value(table, "int", [&](auto && t) {
-            using Type = putils_wrapped_type(t);
-            ret = std::is_same_v<Type, int>;
-        });
-        return ret;
-    };
-    static_assert(ret);
-    SUCCEED();
-}
-
-TEST_F(ConstexprTableTest, TryGetValueCallback) {
-    constexpr auto ret = [] {
-        bool ret = false;
-        putils::try_get_value(table, "int", [&](auto && t) {
-            using Type = putils_wrapped_type(t);
-            ret = std::is_same_v<Type, int>;
-        });
-        return ret;
+        return !found;
     };
     static_assert(ret);
     SUCCEED();
 }
 
 TEST_F(ConstexprTableTest, GetValueValue) {
-    constexpr auto & type = putils::get_value<putils::meta::type<int>>(table, "int");
-    static_assert(std::is_same_v<putils_wrapped_type(type), int>);
+    constexpr auto stringType = putils::get_value<putils::meta::type<const char *>>(table, "string");
+    static_assert(std::is_same_v<putils_wrapped_type(*stringType), const char *>);
+
+    constexpr auto intType = putils::get_value<putils::meta::type<int>>(table, "int");
+    static_assert(std::is_same_v<putils_wrapped_type(*intType), int>);
+
+    constexpr auto floatType = putils::get_value<putils::meta::type<float>>(table, "float");
+    static_assert(std::is_same_v<putils_wrapped_type(*floatType), float>);
+
     SUCCEED();
 }
 
-TEST_F(ConstexprTableTest, TryGetValueValue) {
-    constexpr auto & type = *putils::try_get_value<putils::meta::type<int>>(table, "int");
-    static_assert(std::is_same_v<putils_wrapped_type(type), int>);
+TEST_F(ConstexprTableTest, GetMissingValueValue) {
+    static_assert(putils::get_value<putils::meta::type<double>>(table, "double") == nullptr);
     SUCCEED();
 }
 
-TEST_F(ConstexprTableTest, GetMissingKey) {
-    ASSERT_DEATH({
-        putils::get_key(table, "foo", [](auto &&) {});
-    }, "Key not found");
+TEST_F(ConstexprTableTest, GetValueCallback) {
+    constexpr auto ret = [] {
+        bool ret = true;
+
+        putils::get_value(table, "string", [&](auto && key) {
+            ret &= std::is_same_v<putils_wrapped_type(key), const char *>;
+        });
+
+        putils::get_value(table, "int", [&](auto && key) {
+            ret &= std::is_same_v<putils_wrapped_type(key), int>;
+        });
+
+        putils::get_value(table, "float", [&](auto && key) {
+            ret &= std::is_same_v<putils_wrapped_type(key), float>;
+        });
+
+        return ret;
+    }();
+
+    static_assert(ret);
+    SUCCEED();
 }
 
-TEST_F(ConstexprTableTest, TryGetMissingKey) {
-    bool ret = true;
-    putils::try_get_key(table, "foo", [&](auto &&) {
-        ret = false;
-    });
-    EXPECT_TRUE(ret);
-}
-
-TEST_F(ConstexprTableTest, GetMissingValue) {
-    ASSERT_DEATH({
-        putils::get_value(table, "foo", [](auto &&){});
-    }, "Key not found");
-}
-
-TEST_F(ConstexprTableTest, TryGetMissingValue) {
-    bool ret = true;
-    putils::try_get_value(table, "foo", [&](auto &&) {
-        ret = false;
-    });
-    EXPECT_TRUE(ret);
+TEST_F(ConstexprTableTest, GetMissingValueCallback) {
+    constexpr auto ret = [] {
+        bool found = false;
+        putils::get_value(table, "foo", [&](auto &&) {
+            found = true;
+        });
+        return !found;
+    };
+    static_assert(ret);
+    SUCCEED();
 }
 
 class MutableTableTest : public ::testing::Test {
@@ -149,7 +128,7 @@ public:
         table = putils::make_table(42, false);
     }
 
-    putils::table<std::pair<int, bool>> table = putils::make_table(42, false);
+    putils::table<std::pair<int, bool>> table;
 };
 
 TEST_F(MutableTableTest, GetKeyCallback) {
@@ -159,21 +138,21 @@ TEST_F(MutableTableTest, GetKeyCallback) {
     EXPECT_EQ(std::get<0>(table).first, 84);
 }
 
-TEST_F(MutableTableTest, TryGetKeyCallback) {
-    putils::try_get_key(table, false, [](int & key) {
-        key = 84;
+TEST_F(MutableTableTest, GetMissingKeyCallback) {
+    bool found = false;
+    putils::get_key(table, 42, [&](auto && key) {
+        found = true;
     });
-    EXPECT_EQ(std::get<0>(table).first, 84);
+    EXPECT_FALSE(found);
 }
 
 TEST_F(MutableTableTest, GetKeyValue) {
-    putils::get_key<int>(table, false) = 84;
+    *putils::get_key<int>(table, false) = 84;
     EXPECT_EQ(std::get<0>(table).first, 84);
 }
 
-TEST_F(MutableTableTest, TryGetKeyValue) {
-    *putils::try_get_key<int>(table, false) = 84;
-    EXPECT_EQ(std::get<0>(table).first, 84);
+TEST_F(MutableTableTest, GetMissingKeyValue) {
+    EXPECT_EQ(putils::get_key<float>(table, true), nullptr);
 }
 
 TEST_F(MutableTableTest, GetValueCallback) {
@@ -183,19 +162,19 @@ TEST_F(MutableTableTest, GetValueCallback) {
     EXPECT_EQ(std::get<0>(table).second, true);
 }
 
-TEST_F(MutableTableTest, TryGetValueCallback) {
-    putils::try_get_value(table, 42, [](bool & value) {
-        value = true;
+TEST_F(MutableTableTest, GetMissingValueCallback) {
+    bool found = false;
+    putils::get_value(table, "foo", [&](auto && value) {
+        found = true;
     });
-    EXPECT_EQ(std::get<0>(table).second, true);
+    EXPECT_FALSE(found);
 }
 
 TEST_F(MutableTableTest, GetValueValue) {
-    putils::get_value<bool>(table, 42) = true;
+    *putils::get_value<bool>(table, 42) = true;
     EXPECT_EQ(std::get<0>(table).second, true);
 }
 
-TEST_F(MutableTableTest, TryGetValueValue) {
-    *putils::try_get_value<bool>(table, 42) = true;
-    EXPECT_EQ(std::get<0>(table).second, true);
+TEST_F(MutableTableTest, GetMissingValueValue) {
+    EXPECT_EQ(putils::get_value<float>(table, true), nullptr);
 }

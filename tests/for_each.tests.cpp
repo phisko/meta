@@ -9,7 +9,7 @@ TEST(ForEachTest, ForEachType) {
     );
 
     putils::for_each_type<int, double>([&](auto && t) {
-        const auto value = putils::try_get_value<bool>(table, t);
+        const auto value = putils::get_value<bool>(table, t);
         EXPECT_NE(value, nullptr);
         *value = true;
     });
