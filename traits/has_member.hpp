@@ -7,4 +7,4 @@
 	struct has_member_##member : std::false_type {};\
 \
 	template<typename T>\
-	struct has_member_##member<T, std::void_t<decltype((void)&T::##member)>> : std::true_type {};
+	struct has_member_##member<T, std::void_t<decltype((void)&T::member)>> : std::true_type {};

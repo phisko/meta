@@ -7,4 +7,4 @@
 	struct has_nested_type_##member : std::false_type {};\
 \
 	template<typename T>\
-	struct has_nested_type_##member<T, std::void_t<typename T::##member>> : std::true_type {};
+	struct has_nested_type_##member<T, std::void_t<typename T::member>> : std::true_type {};
