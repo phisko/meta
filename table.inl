@@ -1,6 +1,8 @@
 #pragma once
 
 #include "table.hpp"
+#include "fwd.hpp"
+#include "type.hpp"
 
 namespace putils {
     /*
