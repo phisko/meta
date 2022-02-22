@@ -2,6 +2,13 @@
 #include "meta/for_each.hpp"
 #include "meta/table.hpp"
 
+TEST(ForEachTest, ForEachTypeConstexpr) {
+    putils::for_each_type<int, double>([](auto && t) {
+        static_assert(std::is_same<putils_wrapped_type(t), int>() || std::is_same<putils_wrapped_type(t), double>());
+    });
+    SUCCEED();
+}
+
 TEST(ForEachTest, ForEachType) {
     auto table = putils::make_table(
         putils::meta::type<int>(), false,
@@ -18,6 +25,93 @@ TEST(ForEachTest, ForEachType) {
     EXPECT_TRUE(std::get<1>(table).second);
 }
 
+TEST(ForEachTest, ForEachTypeConstexprReturnBool) {
+    constexpr auto ret = putils::for_each_type<int, double>([](auto && t) {
+        static_assert(std::is_same<putils_wrapped_type(t), int>() || std::is_same<putils_wrapped_type(t), double>());
+        return true;
+    });
+    static_assert(ret);
+
+    constexpr auto bad = putils::for_each_type<int, double>([](auto && t) {
+        return false;
+    });
+    static_assert(!bad);
+    SUCCEED();
+}
+
+TEST(ForEachTest, ForEachTypeReturnBool) {
+    auto table = putils::make_table(
+        putils::meta::type<int>(), false,
+        putils::meta::type<double>(), false,
+        putils::meta::type<float>(), false
+    );
+
+    const auto ret = putils::for_each_type<int, double>([&](auto && t) -> bool {
+        const auto value = putils::get_value<bool>(table, t);
+        EXPECT_NE(value, nullptr);
+        *value = true;
+        return std::is_same<putils_wrapped_type(t), double>();
+    });
+
+    EXPECT_TRUE(ret);
+
+    EXPECT_TRUE(std::get<0>(table).second);
+    EXPECT_TRUE(std::get<1>(table).second);
+    EXPECT_FALSE(std::get<2>(table).second);
+}
+
+TEST(ForEachTest, ForEachTypeConstexprReturnOptional) {
+    constexpr auto ret = putils::for_each_type<int, double>([](auto && t) {
+        static_assert(std::is_same<putils_wrapped_type(t), int>() || std::is_same<putils_wrapped_type(t), double>());
+        return std::optional<int>(42);
+    });
+    static_assert(*ret == 42);
+
+    constexpr auto bad = putils::for_each_type<int, double>([](auto && t) -> std::optional<int> {
+        return std::nullopt;
+    });
+    static_assert(bad == std::nullopt);
+    SUCCEED();
+}
+
+TEST(ForEachTest, ForEachTypeReturnOptional) {
+    auto table = putils::make_table(
+        putils::meta::type<int>(), false,
+        putils::meta::type<double>(), false,
+        putils::meta::type<float>(), false
+    );
+
+    int counter = 0;
+    const auto ret = putils::for_each_type<int, double>([&](auto && t) -> std::optional<int> {
+        const auto value = putils::get_value<bool>(table, t);
+        EXPECT_NE(value, nullptr);
+        *value = true;
+        ++counter;
+        if (std::is_same<putils_wrapped_type(t), double>())
+            return counter;
+        return std::nullopt;
+    });
+
+    EXPECT_EQ(counter, 2);
+    EXPECT_EQ(ret, counter);
+
+    EXPECT_TRUE(std::get<0>(table).second);
+    EXPECT_TRUE(std::get<1>(table).second);
+    EXPECT_FALSE(std::get<2>(table).second);
+}
+
+TEST(ForEachTest, TupleForEachConstexpr) {
+    constexpr auto ret = [] {
+        int total = 0;
+        const auto tuple = std::make_tuple(42, 42);
+        putils::tuple_for_each(tuple, [&](auto && obj) {
+            total += obj;
+        });
+        return total;
+    }();
+    static_assert(ret == 84);
+}
+
 TEST(ForEachTest, TupleForEach) {
     std::stringstream s;
 
@@ -26,6 +120,82 @@ TEST(ForEachTest, TupleForEach) {
         s << obj;
     });
     EXPECT_EQ(s.str(), "420");
+}
+
+TEST(ForEachTest, TupleForEachConstexprReturnBool) {
+    constexpr auto ret = [] {
+        std::pair<bool, int> trueAnd84;
+
+        int total = 0;
+
+        const auto tuple = std::make_tuple(42, 42, 42);
+        const auto ret = putils::tuple_for_each(tuple, [&](auto && obj) {
+            total += obj;
+            if (total == 84)
+                return true;
+            return false;
+        });
+
+        trueAnd84.first = ret;
+        trueAnd84.second = total;
+        return trueAnd84;
+    }();
+
+    static_assert(ret.first == true);
+    static_assert(ret.second == 84);
+}
+
+TEST(ForEachTest, TupleForEachReturnBool) {
+    int total = 0;
+
+    const auto tuple = std::make_tuple(42, 42, 42);
+    const auto ret = putils::tuple_for_each(tuple, [&](auto && obj) {
+        total += obj;
+        if (total == 84)
+            return true;
+        return false;
+    });
+
+    EXPECT_EQ(total, 84);
+    EXPECT_TRUE(ret);
+}
+
+TEST(ForEachTest, TupleForEachConstexprReturnOptional) {
+    constexpr auto ret = [] {
+        std::pair<int, int> pair84and42;
+
+        int total = 0;
+
+        const auto tuple = std::make_tuple(42, 42, 42);
+        const auto ret = putils::tuple_for_each(tuple, [&](auto && obj) -> std::optional<int> {
+            total += obj;
+            if (total == 84)
+                return 42;
+            return std::nullopt;
+        });
+
+        pair84and42.first = total;
+        pair84and42.second = *ret;
+        return pair84and42;
+    }();
+
+    static_assert(ret.first == 84);
+    static_assert(ret.second == 42);
+}
+
+TEST(ForEachTest, TupleForEachReturnOptional) {
+    int total = 0;
+
+    const auto tuple = std::make_tuple(42, 42, 42);
+    const auto ret = putils::tuple_for_each(tuple, [&](auto && obj) -> std::optional<int> {
+        total += obj;
+        if (total == 84)
+            return 42;
+        return std::nullopt;
+    });
+
+    EXPECT_EQ(total, 84);
+    EXPECT_EQ(ret, 42);
 }
 
 TEST(ForEachTest, TupleForEachMutate) {
