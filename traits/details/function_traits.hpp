@@ -2,6 +2,7 @@
 
 #include <type_traits>
 #include <functional>
+#include "function.hpp" // requires putils
 
 namespace putils::detail {
 #define SPECIALIZATION(TYPE) \
