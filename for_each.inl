@@ -16,7 +16,7 @@ namespace putils {
             static_assert(isVoid || isOptional || isBool);
 
             if constexpr (isVoid) {
-                return nullptr;
+                return false;
             }
             if constexpr (isOptional) {
                 return Return{};
