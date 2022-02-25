@@ -1,22 +1,22 @@
 #include <gtest/gtest.h>
 #include "meta/traits/is_unstreamable.hpp"
 
-TEST(IsUnunstreamableTest, String) {
+TEST(is_unstreamable, string) {
     static_assert(putils::is_unstreamable<std::istream, std::string>());
     SUCCEED();
 }
 
-TEST(IsUnunstreamableTest, Vector) {
+TEST(is_unstreamable, vector) {
     static_assert(!putils::is_unstreamable<std::istream, std::vector<bool>>());
     SUCCEED();
 }
 
-TEST(IsUnunstreamableTest, Scalar) {
+TEST(is_unstreamable, scalar) {
     static_assert(putils::is_unstreamable<std::istream, int>());
     SUCCEED();
 }
 
-TEST(IsUnunstreamableTest, NotStream) {
+TEST(is_unstreamable, not_stream) {
     static_assert(!putils::is_unstreamable<int, std::string>());
     SUCCEED();
 }

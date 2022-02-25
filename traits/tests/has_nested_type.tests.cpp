@@ -10,12 +10,12 @@ struct No {
 
 putils_nested_type_detector(Nested);
 
-TEST(HasNestedType, True) {
+TEST(has_nested_type, true) {
     static_assert(has_nested_type_Nested<Yes>());
     SUCCEED();
 }
 
-TEST(HasNestedType, False) {
+TEST(has_nested_type, false) {
     static_assert(!has_nested_type_Nested<No>());
     SUCCEED();
 }

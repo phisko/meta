@@ -2,14 +2,14 @@
 #include "meta/for_each.hpp"
 #include "meta/table.hpp"
 
-TEST(ForEachTest, ForEachTypeConstexpr) {
+TEST(for_each, for_each_type_constexpr) {
     putils::for_each_type<int, double>([](auto && t) {
         static_assert(std::is_same<putils_wrapped_type(t), int>() || std::is_same<putils_wrapped_type(t), double>());
     });
     SUCCEED();
 }
 
-TEST(ForEachTest, ForEachType) {
+TEST(for_each, for_each_type) {
     auto table = putils::make_table(
         putils::meta::type<int>(), false,
         putils::meta::type<double>(), false
@@ -25,7 +25,7 @@ TEST(ForEachTest, ForEachType) {
     EXPECT_TRUE(std::get<1>(table).second);
 }
 
-TEST(ForEachTest, ForEachTypeConstexprReturnBool) {
+TEST(for_each, for_each_type_constexpr_return_bool) {
     constexpr auto ret = putils::for_each_type<int, double>([](auto && t) {
         static_assert(std::is_same<putils_wrapped_type(t), int>() || std::is_same<putils_wrapped_type(t), double>());
         return true;
@@ -39,7 +39,7 @@ TEST(ForEachTest, ForEachTypeConstexprReturnBool) {
     SUCCEED();
 }
 
-TEST(ForEachTest, ForEachTypeReturnBool) {
+TEST(for_each, for_each_type_return_bool) {
     auto table = putils::make_table(
         putils::meta::type<int>(), false,
         putils::meta::type<double>(), false,
@@ -60,7 +60,7 @@ TEST(ForEachTest, ForEachTypeReturnBool) {
     EXPECT_FALSE(std::get<2>(table).second);
 }
 
-TEST(ForEachTest, ForEachTypeConstexprReturnOptional) {
+TEST(for_each, for_each_type_constexpr_return_optional) {
     constexpr auto ret = putils::for_each_type<int, double>([](auto && t) {
         static_assert(std::is_same<putils_wrapped_type(t), int>() || std::is_same<putils_wrapped_type(t), double>());
         return std::optional<int>(42);
@@ -74,7 +74,7 @@ TEST(ForEachTest, ForEachTypeConstexprReturnOptional) {
     SUCCEED();
 }
 
-TEST(ForEachTest, ForEachTypeReturnOptional) {
+TEST(for_each, for_each_type_return_optional) {
     auto table = putils::make_table(
         putils::meta::type<int>(), false,
         putils::meta::type<double>(), false,
@@ -100,7 +100,7 @@ TEST(ForEachTest, ForEachTypeReturnOptional) {
     EXPECT_FALSE(std::get<2>(table).second);
 }
 
-TEST(ForEachTest, TupleForEachConstexpr) {
+TEST(for_each, tuple_for_each_constexpr) {
     constexpr auto ret = [] {
         int total = 0;
         const auto tuple = std::make_tuple(42, 42);
@@ -112,7 +112,7 @@ TEST(ForEachTest, TupleForEachConstexpr) {
     static_assert(ret == 84);
 }
 
-TEST(ForEachTest, TupleForEach) {
+TEST(for_each, tuple_for_each) {
     std::stringstream s;
 
     const auto tuple = std::make_tuple(42, false);
@@ -122,7 +122,7 @@ TEST(ForEachTest, TupleForEach) {
     EXPECT_EQ(s.str(), "420");
 }
 
-TEST(ForEachTest, TupleForEachConstexprReturnBool) {
+TEST(for_each, tuple_for_each_constexpr_return_bool) {
     constexpr auto ret = [] {
         std::pair<bool, int> trueAnd84;
 
@@ -145,7 +145,7 @@ TEST(ForEachTest, TupleForEachConstexprReturnBool) {
     static_assert(ret.second == 84);
 }
 
-TEST(ForEachTest, TupleForEachReturnBool) {
+TEST(for_each, tuple_for_each_return_bool) {
     int total = 0;
 
     const auto tuple = std::make_tuple(42, 42, 42);
@@ -160,7 +160,7 @@ TEST(ForEachTest, TupleForEachReturnBool) {
     EXPECT_TRUE(ret);
 }
 
-TEST(ForEachTest, TupleForEachConstexprReturnOptional) {
+TEST(for_each, tuple_for_each_constexpr_return_optional) {
     constexpr auto ret = [] {
         std::pair<int, int> pair84and42;
 
@@ -183,7 +183,7 @@ TEST(ForEachTest, TupleForEachConstexprReturnOptional) {
     static_assert(ret.second == 42);
 }
 
-TEST(ForEachTest, TupleForEachReturnOptional) {
+TEST(for_each, tuple_for_each_return_optional) {
     int total = 0;
 
     const auto tuple = std::make_tuple(42, 42, 42);
@@ -198,7 +198,7 @@ TEST(ForEachTest, TupleForEachReturnOptional) {
     EXPECT_EQ(ret, 42);
 }
 
-TEST(ForEachTest, TupleForEachMutate) {
+TEST(for_each, tuple_for_each_mutate) {
     auto tuple = std::make_tuple(42, true);
     putils::tuple_for_each(tuple, [&](auto && obj) {
         obj = 0;

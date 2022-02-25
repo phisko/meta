@@ -13,22 +13,22 @@ struct Obj {
 template<typename T>
 using Result = std::is_same<std::tuple<int, double>, putils::member_function_arguments<T>>;
 
-TEST(MemberFunctionArgumentsTest, Normal) {
+TEST(member_function_arguments, normal) {
     static_assert(Result<decltype(&Obj::f)>());
     SUCCEED();
 }
 
-TEST(MemberFunctionArgumentsTest, Const) {
+TEST(member_function_arguments, const) {
     static_assert(Result<decltype(&Obj::fconst)>());
     SUCCEED();
 }
 
-TEST(MemberFunctionArgumentsTest, Noexcept) {
+TEST(member_function_arguments, noexcept) {
     static_assert(Result<decltype(&Obj::fnoexcept)>());
     SUCCEED();
 }
 
-TEST(MemberFunctionArgumentsTest, ConstNoexcept) {
+TEST(member_function_arguments, const_noexcept) {
     static_assert(Result<decltype(&Obj::fconstnoexcept)>());
     SUCCEED();
 }

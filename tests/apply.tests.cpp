@@ -5,18 +5,18 @@ static int func(int i) {
     return i;
 }
 
-TEST(ApplyTest, Function) {
+TEST(apply, function) {
     EXPECT_EQ(putils::apply(std::make_tuple(42), func), 42);
 }
 
-TEST(ApplyTest, Lambda) {
+TEST(apply, lambda) {
     const auto func = [](int i) {
         return i;
     };
     EXPECT_EQ(putils::apply(std::make_tuple(42), func), 42);
 }
 
-TEST(ApplyTest, Modify) {
+TEST(apply, modify) {
     auto tuple = std::make_tuple(42);
     const auto func = [](int & i) {
         i = 0;

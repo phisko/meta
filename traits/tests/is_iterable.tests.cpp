@@ -1,27 +1,27 @@
 #include <gtest/gtest.h>
 #include "meta/traits/is_iterable.hpp"
 
-TEST(IsIterableTest, Array) {
+TEST(is_iterable, array) {
     static_assert(putils::is_iterable<bool[2]>());
     SUCCEED();
 }
 
-TEST(IsIterableTest, Pointer) {
+TEST(is_iterable, pointer) {
     static_assert(!putils::is_iterable<bool *>());
     SUCCEED();
 }
 
-TEST(IsIterableTest, Vector) {
+TEST(is_iterable, vector) {
     static_assert(putils::is_iterable<std::vector<bool>>());
     SUCCEED();
 }
 
-TEST(IsIterableTest, Map) {
+TEST(is_iterable, map) {
     static_assert(putils::is_iterable<std::map<int, bool>>());
     SUCCEED();
 }
 
-TEST(IsIterableTest, False) {
+TEST(is_iterable, false) {
     static_assert(!putils::is_iterable<int>());
     SUCCEED();
 }

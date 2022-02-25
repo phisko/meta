@@ -13,22 +13,22 @@ struct Obj {
 template<typename T>
 using Result = std::is_same<void (Obj::*)(int, double), putils::member_function_decay<T>>;
 
-TEST(MemberFunctionDecayTest, Normal) {
+TEST(member_function_decay, normal) {
     static_assert(Result<decltype(&Obj::f)>());
     SUCCEED();
 }
 
-TEST(MemberFunctionDecayTest, Const) {
+TEST(member_function_decay, const) {
     static_assert(Result<decltype(&Obj::fconst)>());
     SUCCEED();
 }
 
-TEST(MemberFunctionDecayTest, Noexcept) {
+TEST(member_function_decay, noexcept) {
     static_assert(Result<decltype(&Obj::fnoexcept)>());
     SUCCEED();
 }
 
-TEST(MemberFunctionDecayTest, ConstNoexcept) {
+TEST(member_function_decay, const_noexcept) {
     static_assert(Result<decltype(&Obj::fconstnoexcept)>());
     SUCCEED();
 }

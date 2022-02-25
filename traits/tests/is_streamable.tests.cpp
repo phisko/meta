@@ -1,22 +1,22 @@
 #include <gtest/gtest.h>
 #include "meta/traits/is_streamable.hpp"
 
-TEST(IsStreamableTest, String) {
+TEST(is_streamable, string) {
     static_assert(putils::is_streamable<std::ostream, std::string>());
     SUCCEED();
 }
 
-TEST(IsStreamableTest, Vector) {
+TEST(is_streamable, vector) {
     static_assert(!putils::is_streamable<std::ostream, std::vector<bool>>());
     SUCCEED();
 }
 
-TEST(IsStreamableTest, Scalar) {
+TEST(is_streamable, scalar) {
     static_assert(putils::is_streamable<std::ostream, int>());
     SUCCEED();
 }
 
-TEST(IsStreamableTest, NotStream) {
+TEST(is_streamable, not_stream) {
     static_assert(!putils::is_streamable<int, std::string>());
     SUCCEED();
 }

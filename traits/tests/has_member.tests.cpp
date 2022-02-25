@@ -10,12 +10,12 @@ struct No {
 
 putils_member_detector(i);
 
-TEST(HasMember, True) {
+TEST(has_member, true) {
     static_assert(has_member_i<Yes>());
     SUCCEED();
 }
 
-TEST(HasMember, False) {
+TEST(has_member, false) {
     static_assert(!has_member_i<No>());
     SUCCEED();
 }

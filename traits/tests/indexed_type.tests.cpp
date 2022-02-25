@@ -4,22 +4,22 @@
 template<typename T>
 using Result = std::is_same<float, std::decay_t<putils::indexed_type<T>>>;
 
-TEST(IndexedTypeTest, Array) {
+TEST(indexed_type, array) {
     static_assert(Result<float[2]>());
     SUCCEED();
 }
 
-TEST(IndexedTypeTest, Pointer) {
+TEST(indexed_type, pointer) {
     static_assert(Result<float *>());
     SUCCEED();
 }
 
-TEST(IndexedTypeTest, Vector) {
+TEST(indexed_type, vector) {
     static_assert(Result<std::vector<float>>());
     SUCCEED();
 }
 
-TEST(IndexedTypeTest, Map) {
+TEST(indexed_type, map) {
     static_assert(Result<std::map<int, float>>());
     SUCCEED();
 }

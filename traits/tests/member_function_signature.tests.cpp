@@ -13,22 +13,22 @@ struct Obj {
 template<typename T>
 using Result = std::is_same<float(int, double), putils::member_function_signature<T>>;
 
-TEST(MemberFunctionSignatureTest, Normal) {
+TEST(member_function_signature, normal) {
     static_assert(Result<decltype(&Obj::f)>());
     SUCCEED();
 }
 
-TEST(MemberFunctionSignatureTest, Const) {
+TEST(member_function_signature, const) {
     static_assert(Result<decltype(&Obj::fconst)>());
     SUCCEED();
 }
 
-TEST(MemberFunctionSignatureTest, Noexcept) {
+TEST(member_function_signature, noexcept) {
     static_assert(Result<decltype(&Obj::fnoexcept)>());
     SUCCEED();
 }
 
-TEST(MemberFunctionSignatureTest, ConstNoexcept) {
+TEST(member_function_signature, const_noexcept) {
     static_assert(Result<decltype(&Obj::fconstnoexcept)>());
     SUCCEED();
 }

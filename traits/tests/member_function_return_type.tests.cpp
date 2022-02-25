@@ -13,22 +13,22 @@ struct Obj {
 template<typename T>
 using Result = std::is_same<float, putils::member_function_return_type<T>>;
 
-TEST(MemberFunctionReturnTypeTest, Normal) {
+TEST(member_function_return_type, normal) {
     static_assert(Result<decltype(&Obj::f)>());
     SUCCEED();
 }
 
-TEST(MemberFunctionReturnTypeTest, Const) {
+TEST(member_function_return_type, const) {
     static_assert(Result<decltype(&Obj::fconst)>());
     SUCCEED();
 }
 
-TEST(MemberFunctionReturnTypeTest, Noexcept) {
+TEST(member_function_return_type, noexcept) {
     static_assert(Result<decltype(&Obj::fnoexcept)>());
     SUCCEED();
 }
 
-TEST(MemberFunctionReturnTypeTest, ConstNoexcept) {
+TEST(member_function_return_type, const_noexcept) {
     static_assert(Result<decltype(&Obj::fconstnoexcept)>());
     SUCCEED();
 }
