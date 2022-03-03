@@ -98,6 +98,15 @@ namespace putils {
 		return ret;
 	}
 
+    template<typename Table, typename Key>
+    constexpr bool has_value(Table && table, Key && value) noexcept {
+        bool ret = false;
+        get_key(FWD(table), FWD(value), [&](auto &&) noexcept {
+            ret = true;
+        });
+        return ret;
+    }
+
 	template<typename Table, typename Value, typename Func>
 	constexpr void get_key(Table && table, Value && value, Func && func) noexcept {
 		detail::get_value<detail::ValuePos, detail::KeyPos>(FWD(value), FWD(table), FWD(func));
@@ -112,6 +121,15 @@ namespace putils {
 		});
 		return ret;
 	}
+
+    template<typename Table, typename Key>
+    constexpr bool has_key(Table && table, Key && key) noexcept {
+        bool ret = false;
+        get_value(FWD(table), FWD(key), [&](auto &&) noexcept {
+            ret = true;
+        });
+        return ret;
+    }
 
     /*
      * make_table implementation
