@@ -1,10 +1,13 @@
 #include <gtest/gtest.h>
 #include "meta/new_from_tuple.hpp"
 
-struct Obj {
-    Obj(int i = 0) : i (i) {}
-    int i;
-};
+namespace {
+    struct Obj {
+        Obj(int i = 0) : i(i) {}
+
+        int i;
+    };
+}
 
 TEST(new_from_tuple, new_from_tuple) {
     const auto tuple = std::make_tuple(42);

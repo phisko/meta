@@ -1,11 +1,13 @@
 #include <gtest/gtest.h>
 #include "meta/members.hpp"
 
-struct Obj {
-    double d = 1024;
-    int i = 42;
-    using Member = decltype(&Obj::i);
-};
+namespace {
+    struct Obj {
+        double d = 1024;
+        int i = 42;
+        using Member = decltype(&Obj::i);
+    };
+}
 
 TEST(members, MemberType) {
     static_assert(std::is_same<int, putils::MemberType<Obj::Member>>());
