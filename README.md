@@ -11,6 +11,7 @@ Phisko's metaprogramming utilities.
 
 * [apply](apply.md): C++14 implementation of `std::apply`
 * [for_each](for_each.md): call a function for each element in a tuple, or instantiate a template type and call a static function for each type in a list
+* [fwd](fwd.md): macro which calls `std::forward` for the correct type
 * [has_type](has_type.md): type_trait indicating whether a tuple contains a certain type
 * [members](member.mds): type_traits and functions for inspecting type members
 * [nameof](nameof.md): macro to mimick other languages' `nameof`
