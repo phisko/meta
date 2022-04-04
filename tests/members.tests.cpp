@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "meta/members.hpp"
+#include "members.hpp"
 
 namespace {
     struct Obj {

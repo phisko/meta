@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "meta/type.hpp"
+#include "type.hpp"
 
 TEST(type, typeof_scalar) {
     int i = 0;

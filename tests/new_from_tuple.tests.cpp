@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "meta/new_from_tuple.hpp"
+#include "new_from_tuple.hpp"
 
 namespace {
     struct Obj {

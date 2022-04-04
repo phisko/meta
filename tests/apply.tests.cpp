@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "meta/apply.hpp"
+#include "apply.hpp"
 
 static int func(int i) {
     return i;

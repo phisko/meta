@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "meta/nameof.hpp"
+#include "nameof.hpp"
 
 struct Obj {
     int _i = 42;

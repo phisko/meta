@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "meta/for_each.hpp"
-#include "meta/table.hpp"
+#include "for_each.hpp"
+#include "table.hpp"
 
 TEST(for_each, for_each_type_constexpr) {
     putils::for_each_type<int, double>([](auto && t) {
