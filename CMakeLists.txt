@@ -1,6 +1,15 @@
+cmake_minimum_required(VERSION 3.0)
+project(meta HOMEPAGE_URL "https://github.com/phisko/meta")
+
 set(CMAKE_CXX_STANDARD 20)
 
-if (PUTILS_TESTS)
+add_subdirectory(cmake_helpers)
+include(conan_helper)
+
+option(PUTILS_META_TESTS "Build meta tests" OFF)
+if (PUTILS_META_TESTS)
+    enable_testing()
+
     set(test_exe_name putils_meta_tests)
     file(GLOB test_src tests/*.tests.cpp)
 
