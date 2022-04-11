@@ -1,5 +1,7 @@
 # Meta
 
+[![CMake](https://github.com/phisko/meta/actions/workflows/cmake.yml/badge.svg)](https://github.com/phisko/meta/actions/workflows/cmake.yml)
+
 Phisko's metaprogramming utilities.
 
 ## Classes
