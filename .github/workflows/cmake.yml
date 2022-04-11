@@ -9,15 +9,7 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [ ubuntu-latest, windows ]
-        configuration: [ Release, Debug ]
-
-    runs-on: ${{ matrix.os }}
-    
-    steps:
-      - uses: phisko/cmake-cxx-conan/.github/workflows/test.yml@main
-        with:
-          os: ${{ matrix.os }}
-          cmake_options: -DPUTILS_META_TESTS=ON
+    uses: phisko/cmake-cxx-conan/.github/workflows/test.yml@main
+    with:
+      os: ubuntu-latest
+      cmake_options: -DPUTILS_META_TESTS=ON
