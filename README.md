@@ -44,5 +44,3 @@ Phisko's metaprogramming utilities.
 * [member_function_signature](traits/member_function_signature.md)
 * [member_function_arguments](traits/member_function_arguments.md)
 * [member_function_return_type](traits/member_function_return_type.md)
-
-
