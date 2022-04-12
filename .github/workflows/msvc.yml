@@ -11,5 +11,5 @@ jobs:
   build:
     uses: phisko/cmake-cxx-conan/.github/workflows/test.yml@main
     with:
-      os: windows
+      os: windows-latest
       cmake_options: -DPUTILS_META_TESTS=ON
