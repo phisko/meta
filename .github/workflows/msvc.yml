@@ -1,4 +1,4 @@
-name: CMake
+name: msvc
 
 on:
   push:
@@ -11,5 +11,5 @@ jobs:
   build:
     uses: phisko/cmake-cxx-conan/.github/workflows/test.yml@main
     with:
-      os: ubuntu-latest
+      os: windows
       cmake_options: -DPUTILS_META_TESTS=ON
