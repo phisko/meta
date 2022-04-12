@@ -1,6 +1,7 @@
 # Meta
 
-[![CMake](https://github.com/phisko/meta/actions/workflows/cmake.yml/badge.svg)](https://github.com/phisko/meta/actions/workflows/cmake.yml)
+[![gcc](https://github.com/phisko/meta/actions/workflows/gcc.yml/badge.svg)](https://github.com/phisko/meta/actions/workflows/gcc.yml)
+[![msvc](https://github.com/phisko/meta/actions/workflows/msvc.yml/badge.svg)](https://github.com/phisko/meta/actions/workflows/msvc.yml)
 
 Phisko's metaprogramming utilities.
 
