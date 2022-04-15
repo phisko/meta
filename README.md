@@ -1,7 +1,6 @@
 # Meta
 
-[![gcc](https://github.com/phisko/meta/workflows/gcc/badge.svg)](https://github.com/phisko/meta/actions/workflows/gcc.yml)
-[![msvc](https://github.com/phisko/meta/workflows/msvc/badge.svg)](https://github.com/phisko/meta/actions/workflows/msvc.yml)
+[![tests](https://github.com/phisko/meta/workflows/tests/badge.svg)](https://github.com/phisko/meta/actions/workflows/build.yml)
 
 Phisko's metaprogramming utilities.
 
