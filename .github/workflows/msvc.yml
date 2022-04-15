@@ -3,8 +3,22 @@ name: msvc
 on:
   push:
     branches: [ main ]
+    paths:
+      - '**.cpp'
+      - '**.hpp'
+      - '**.inl'
+      - '**/CMakeLists.txt'
+      - '**.cmake'
+      - 'cmake_helpers'
   pull_request:
     branches: [ main ]
+    paths:
+      - '**.cpp'
+      - '**.hpp'
+      - '**.inl'
+      - '**/CMakeLists.txt'
+      - '**.cmake'
+      - 'cmake_helpers'
   workflow_dispatch:
 
 jobs:
