@@ -8,6 +8,8 @@ include(conan_helper)
 
 option(PUTILS_META_TESTS "Build meta tests" OFF)
 if (PUTILS_META_TESTS)
+    enable_testing()
+
     set(test_exe_name putils_meta_tests)
     file(GLOB test_src tests/*.tests.cpp)
 
