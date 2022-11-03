@@ -1,5 +1,8 @@
+// gtest
 #include <gtest/gtest.h>
-#include "meta/traits/is_member_function_ptr.hpp"
+
+// meta
+#include "traits/is_member_function_ptr.hpp"
 
 struct Obj {
     void f();

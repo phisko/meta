@@ -1,5 +1,8 @@
+// gtest
 #include <gtest/gtest.h>
-#include "meta/traits/indexed_type.hpp"
+
+// meta
+#include "traits/indexed_type.hpp"
 
 template<typename T>
 using Result = std::is_same<float, std::decay_t<putils::indexed_type<T>>>;

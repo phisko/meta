@@ -1,5 +1,8 @@
+// gtest
 #include <gtest/gtest.h>
-#include "meta/traits/has_member.hpp"
+
+// meta
+#include "traits/has_member.hpp"
 
 struct Yes {
     int i = 42;

@@ -1,6 +1,11 @@
+// gtest
 #include <gtest/gtest.h>
+
+// meta
+#include "traits/function_arguments.hpp"
+
+// putils
 #include "function.hpp"
-#include "meta/traits/function_arguments.hpp"
 
 TEST(function_arguments, function) {
     void f(int i, double d);

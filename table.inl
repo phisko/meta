@@ -1,6 +1,6 @@
-#pragma once
-
 #include "table.hpp"
+
+// meta
 #include "fwd.hpp"
 #include "type.hpp"
 

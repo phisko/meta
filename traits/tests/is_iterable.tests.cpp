@@ -1,5 +1,8 @@
+// gtest
 #include <gtest/gtest.h>
-#include "meta/traits/is_iterable.hpp"
+
+// meta
+#include "traits/is_iterable.hpp"
 
 TEST(is_iterable, array) {
     static_assert(putils::is_iterable<bool[2]>());

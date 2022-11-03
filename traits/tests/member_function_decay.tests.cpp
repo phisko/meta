@@ -1,5 +1,8 @@
+// gtest
 #include <gtest/gtest.h>
-#include "meta/traits/member_function_decay.hpp"
+
+// meta
+#include "traits/member_function_decay.hpp"
 
 struct Obj {
     void f(int, double);

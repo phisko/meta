@@ -1,5 +1,8 @@
+// gtest
 #include <gtest/gtest.h>
-#include "meta/traits/member_function_return_type.hpp"
+
+// meta
+#include "traits/member_function_return_type.hpp"
 
 struct Obj {
     float f(int, double);

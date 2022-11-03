@@ -1,5 +1,8 @@
+// gtest
 #include <gtest/gtest.h>
-#include "meta/traits/has_nested_type.hpp"
+
+// meta
+#include "traits/has_nested_type.hpp"
 
 struct Yes {
     struct Nested {};

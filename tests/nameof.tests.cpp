@@ -1,4 +1,7 @@
+// gtest
 #include <gtest/gtest.h>
+
+// meta
 #include "nameof.hpp"
 
 struct Obj {
