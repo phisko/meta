@@ -2,10 +2,7 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "meta/traits/is_function.hpp"
-
-// putils
-#include "function.hpp"
+#include "traits/is_function.hpp"
 
 TEST(is_function, function) {
     void f(int i, double d);
@@ -21,12 +18,6 @@ TEST(is_function, noexcept) {
 
 TEST(is_function, std_function) {
     const std::function<void(int, double)> f;
-    static_assert(putils::is_function<decltype(f)>());
-    SUCCEED();
-}
-
-TEST(is_function, putils_function) {
-    const putils::function<void(int, double), 64> f;
     static_assert(putils::is_function<decltype(f)>());
     SUCCEED();
 }

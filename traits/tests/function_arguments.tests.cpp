@@ -4,9 +4,6 @@
 // meta
 #include "traits/function_arguments.hpp"
 
-// putils
-#include "function.hpp"
-
 TEST(function_arguments, function) {
     void f(int i, double d);
     static_assert(std::is_same<std::tuple<int, double>, putils::function_arguments<decltype(f)>>());
@@ -21,12 +18,6 @@ TEST(function_arguments, noexcept) {
 
 TEST(function_arguments, std_function) {
     const std::function<void(int, double)> f;
-    static_assert(std::is_same<std::tuple<int, double>, putils::function_arguments<decltype(f)>>());
-    SUCCEED();
-}
-
-TEST(function_arguments, putils_function) {
-    const putils::function<void(int, double), 64> f;
     static_assert(std::is_same<std::tuple<int, double>, putils::function_arguments<decltype(f)>>());
     SUCCEED();
 }
