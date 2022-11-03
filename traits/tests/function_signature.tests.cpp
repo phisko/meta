@@ -1,6 +1,11 @@
+// gtest
 #include <gtest/gtest.h>
+
+// meta
+#include "traits/function_signature.hpp"
+
+// putils
 #include "function.hpp"
-#include "meta/traits/function_signature.hpp"
 
 TEST(function_signature, function) {
     bool f(int i, double d);

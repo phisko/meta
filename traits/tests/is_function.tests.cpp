@@ -1,6 +1,11 @@
+// gtest
 #include <gtest/gtest.h>
-#include "function.hpp"
+
+// meta
 #include "meta/traits/is_function.hpp"
+
+// putils
+#include "function.hpp"
 
 TEST(is_function, function) {
     void f(int i, double d);

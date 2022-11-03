@@ -1,4 +1,7 @@
+// gtest
 #include <gtest/gtest.h>
+
+// meta
 #include "for_each.hpp"
 #include "table.hpp"
 

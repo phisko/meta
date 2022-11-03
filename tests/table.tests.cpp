@@ -1,4 +1,7 @@
+// gtest
 #include <gtest/gtest.h>
+
+// meta
 #include "table.hpp"
 
 class table_constexpr : public ::testing::Test {

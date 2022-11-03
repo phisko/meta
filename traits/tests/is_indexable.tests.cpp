@@ -1,5 +1,8 @@
+// gtest
 #include <gtest/gtest.h>
-#include "meta/traits/is_indexable.hpp"
+
+// meta
+#include "traits/is_indexable.hpp"
 
 TEST(is_indexable, array) {
     static_assert(putils::is_indexable<bool[2]>());

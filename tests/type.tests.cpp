@@ -1,4 +1,7 @@
+// gtest
 #include <gtest/gtest.h>
+
+// meta
 #include "type.hpp"
 
 TEST(type, typeof_scalar) {

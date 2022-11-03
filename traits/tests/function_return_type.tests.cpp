@@ -1,6 +1,11 @@
+// gtest
 #include <gtest/gtest.h>
+
+// meta
+#include "traits/function_return_type.hpp"
+
+// putils
 #include "function.hpp"
-#include "meta/traits/function_return_type.hpp"
 
 TEST(function_return_type, function) {
     bool f(int i, double d);
