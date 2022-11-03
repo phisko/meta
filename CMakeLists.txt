@@ -11,7 +11,7 @@ if (PUTILS_META_TESTS)
     enable_testing()
 
     set(test_exe_name putils_meta_tests)
-    file(GLOB test_src tests/*.tests.cpp)
+    file(GLOB test_src tests/*.tests.cpp traits/tests/*.tests.cpp)
 
     putils_add_test_executable(${test_exe_name} ${test_src})
     target_include_directories(${test_exe_name} PRIVATE .)

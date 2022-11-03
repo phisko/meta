@@ -4,9 +4,6 @@
 // meta
 #include "traits/function_signature.hpp"
 
-// putils
-#include "function.hpp"
-
 TEST(function_signature, function) {
     bool f(int i, double d);
     static_assert(std::is_same<bool(*)(int, double), putils::function_signature<decltype(f)>>());
@@ -21,12 +18,6 @@ TEST(function_signature, noexcept) {
 
 TEST(function_signature, std_function) {
     const std::function<bool(int, double)> f;
-    static_assert(std::is_same<bool(*)(int, double), putils::function_signature<decltype(f)>>());
-    SUCCEED();
-}
-
-TEST(function_signature, putils_function) {
-    const putils::function<bool(int, double), 64> f;
     static_assert(std::is_same<bool(*)(int, double), putils::function_signature<decltype(f)>>());
     SUCCEED();
 }
