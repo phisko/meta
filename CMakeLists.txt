@@ -1,18 +1,20 @@
 cmake_minimum_required(VERSION 3.0)
-project(meta HOMEPAGE_URL "https://github.com/phisko/meta")
+project(putils_meta HOMEPAGE_URL "https://github.com/phisko/meta")
 
 set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(cmake_helpers)
-include(conan_helper)
+
+add_library(putils_meta INTERFACE)
+target_include_directories(putils_meta INTERFACE .)
 
 option(PUTILS_META_TESTS "Build meta tests" OFF)
 if (PUTILS_META_TESTS)
     enable_testing()
 
     set(test_exe_name putils_meta_tests)
-    file(GLOB test_src tests/*.tests.cpp traits/tests/*.tests.cpp)
+    file(GLOB test_src putils/meta/tests/*.tests.cpp putils/meta/traits/tests/*.tests.cpp)
 
     putils_add_test_executable(${test_exe_name} ${test_src})
-    target_include_directories(${test_exe_name} PRIVATE .)
+    target_link_libraries(${test_exe_name} PRIVATE putils_meta)
 endif()
