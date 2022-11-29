@@ -4,26 +4,26 @@
 #include <optional>
 
 // meta
-#include "traits/function_return_type.hpp"
-#include "traits/is_specialization.hpp"
+#include "putils/meta/traits/function_return_type.hpp"
+#include "putils/meta/traits/is_specialization.hpp"
 
 namespace putils {
     namespace detail {
         template<typename F, typename Tuple, typename Return = void>
         constexpr auto tuple_for_each(F && f, Tuple && tuple, std::index_sequence<>) noexcept {
-            constexpr bool isVoid = std::is_same<Return, void>();
-            constexpr bool isOptional = putils::is_specialization<Return, std::optional>();
-            constexpr bool isBool = std::is_same<Return, bool>();
+            constexpr bool is_void = std::is_same<Return, void>();
+            constexpr bool is_optional = putils::is_specialization<Return, std::optional>();
+            constexpr bool is_bool = std::is_same<Return, bool>();
 
-            static_assert(isVoid || isOptional || isBool);
+            static_assert(is_void || is_optional || is_bool);
 
-            if constexpr (isVoid) {
+            if constexpr (is_void) {
                 return false;
             }
-            if constexpr (isOptional) {
+            if constexpr (is_optional) {
                 return Return{};
             }
-            else if constexpr (isBool) {
+            else if constexpr (is_bool) {
                 return false;
             }
         }
@@ -32,16 +32,16 @@ namespace putils {
         constexpr auto tuple_for_each(F && f, Tuple && tuple, std::index_sequence<I, Is...>) noexcept {
             using ReturnType = decltype(f(std::get<I>(tuple)));
 
-            constexpr bool isVoid = std::is_same<ReturnType, void>();
-            constexpr bool isOptional = putils::is_specialization<ReturnType, std::optional>();
-            constexpr bool isBool = std::is_same<ReturnType, bool>();
+            constexpr bool is_void = std::is_same<ReturnType, void>();
+            constexpr bool is_optional = putils::is_specialization<ReturnType, std::optional>();
+            constexpr bool is_bool = std::is_same<ReturnType, bool>();
 
-            static_assert(isVoid || isOptional || isBool, "tuple_for_each callback should return void, std::optional or bool");
+            static_assert(is_void || is_optional || is_bool, "tuple_for_each callback should return void, std::optional or bool");
 
-            if constexpr (isVoid) {
+            if constexpr (is_void) {
                 f(std::get<I>(tuple));
             }
-            else if constexpr (isOptional || isBool) {
+            else if constexpr (is_optional || is_bool) {
                 const auto ret = f(std::get<I>(tuple));
                 if (ret)
                     return ret;

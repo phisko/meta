@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "traits/function_signature.hpp"
+#include "putils/meta/traits/function_signature.hpp"
 
 TEST(function_signature, function) {
     bool f(int i, double d);

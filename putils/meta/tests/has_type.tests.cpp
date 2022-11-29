@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "has_type.hpp"
+#include "putils/meta/has_type.hpp"
 
 TEST(has_type, true) {
     static_assert(putils::has_type<bool, bool, int>());

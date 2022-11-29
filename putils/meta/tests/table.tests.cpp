@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "table.hpp"
+#include "putils/meta/table.hpp"
 
 class table_constexpr : public ::testing::Test {
 public:
@@ -24,9 +24,9 @@ TEST_F(table_constexpr, size_empty) {
 }
 
 TEST_F(table_constexpr, get_key) {
-    constexpr auto stringName = putils::get_key<const char *>(table, putils::meta::type<const char *>());
-    static_assert(stringName != nullptr);
-    static_assert(*stringName == std::string_view("string"));
+    constexpr auto string_name = putils::get_key<const char *>(table, putils::meta::type<const char *>());
+    static_assert(string_name != nullptr);
+    static_assert(*string_name == std::string_view("string"));
 
     static_assert(*putils::get_key<const char *>(table, putils::meta::type<int>()) == std::string_view("int"));
     static_assert(*putils::get_key<const char *>(table, putils::meta::type<float>()) == std::string_view("float"));
@@ -73,14 +73,14 @@ TEST_F(table_constexpr, get_key_callback_missing) {
 }
 
 TEST_F(table_constexpr, get_value) {
-    constexpr auto stringType = putils::get_value<putils::meta::type<const char *>>(table, "string");
-    static_assert(std::is_same_v<putils_wrapped_type(*stringType), const char *>);
+    constexpr auto string_type = putils::get_value<putils::meta::type<const char *>>(table, "string");
+    static_assert(std::is_same_v<putils_wrapped_type(*string_type), const char *>);
 
-    constexpr auto intType = putils::get_value<putils::meta::type<int>>(table, "int");
-    static_assert(std::is_same_v<putils_wrapped_type(*intType), int>);
+    constexpr auto int_type = putils::get_value<putils::meta::type<int>>(table, "int");
+    static_assert(std::is_same_v<putils_wrapped_type(*int_type), int>);
 
-    constexpr auto floatType = putils::get_value<putils::meta::type<float>>(table, "float");
-    static_assert(std::is_same_v<putils_wrapped_type(*floatType), float>);
+    constexpr auto float_type = putils::get_value<putils::meta::type<float>>(table, "float");
+    static_assert(std::is_same_v<putils_wrapped_type(*float_type), float>);
 
     SUCCEED();
 }

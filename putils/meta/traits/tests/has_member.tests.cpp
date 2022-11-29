@@ -2,23 +2,23 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "traits/has_member.hpp"
+#include "putils/meta/traits/has_member.hpp"
 
-struct Yes {
+struct yes {
     int i = 42;
 };
 
-struct No {
+struct no {
 };
 
 putils_member_detector(i);
 
 TEST(has_member, true) {
-    static_assert(has_member_i<Yes>());
+    static_assert(has_member_i<yes>());
     SUCCEED();
 }
 
 TEST(has_member, false) {
-    static_assert(!has_member_i<No>());
+    static_assert(!has_member_i<no>());
     SUCCEED();
 }

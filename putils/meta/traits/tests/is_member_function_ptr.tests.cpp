@@ -2,9 +2,9 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "traits/is_member_function_ptr.hpp"
+#include "putils/meta/traits/is_member_function_ptr.hpp"
 
-struct Obj {
+struct obj {
     void f();
     void fnoexcept() noexcept;
     void fconst() const;
@@ -14,27 +14,27 @@ struct Obj {
 };
 
 TEST(is_member_function_ptr, normal) {
-    static_assert(putils::is_member_function_ptr<decltype(&Obj::f)>());
+    static_assert(putils::is_member_function_ptr<decltype(&obj::f)>());
     SUCCEED();
 }
 
 TEST(is_member_function_ptr, const) {
-    static_assert(putils::is_member_function_ptr<decltype(&Obj::fconst)>());
+    static_assert(putils::is_member_function_ptr<decltype(&obj::fconst)>());
     SUCCEED();
 }
 
 TEST(is_member_function_ptr, noexcept) {
-    static_assert(putils::is_member_function_ptr<decltype(&Obj::fnoexcept)>());
+    static_assert(putils::is_member_function_ptr<decltype(&obj::fnoexcept)>());
     SUCCEED();
 }
 
 TEST(is_member_function_ptr, const_noexcept) {
-    static_assert(putils::is_member_function_ptr<decltype(&Obj::fconstnoexcept)>());
+    static_assert(putils::is_member_function_ptr<decltype(&obj::fconstnoexcept)>());
     SUCCEED();
 }
 
 TEST(is_member_function_ptr, attribute) {
-    static_assert(!putils::is_member_function_ptr<decltype(&Obj::i)>());
+    static_assert(!putils::is_member_function_ptr<decltype(&obj::i)>());
     SUCCEED();
 }
 

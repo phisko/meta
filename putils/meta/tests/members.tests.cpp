@@ -2,33 +2,33 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "members.hpp"
+#include "putils/meta/members.hpp"
 
 namespace {
-    struct Obj {
+    struct obj {
         double d = 1024;
         int i = 42;
-        using Member = decltype(&Obj::i);
+        using member = decltype(&obj::i);
     };
 }
 
-TEST(members, MemberType) {
-    static_assert(std::is_same<int, putils::MemberType<Obj::Member>>());
+TEST(members, member_type) {
+    static_assert(std::is_same<int, putils::member_type<obj::member>>());
     SUCCEED();
 }
 
-TEST(members, MemberTypeMacro) {
-    static_assert(std::is_same<int, PUTILS_MEMBER_TYPE(Obj, Obj::Member)>());
+TEST(members, member_type_macro) {
+    static_assert(std::is_same<int, PUTILS_MEMBER_TYPE(obj, obj::member)>());
     SUCCEED();
 }
 
-TEST(members, ObjectType) {
-    static_assert(std::is_same<Obj, putils::ObjectType<Obj::Member>>());
+TEST(members, object_type) {
+    static_assert(std::is_same<obj, putils::object_type<obj::member>>());
     SUCCEED();
 }
 
 TEST(members, member_offset) {
-    const auto offset = putils::member_offset(&Obj::i);
-    const Obj obj;
+    const auto offset = putils::member_offset(&obj::i);
+    const obj obj;
     EXPECT_EQ((const char *)&obj + offset, (const char *)&obj.i);
 }

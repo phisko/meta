@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "traits/is_streamable.hpp"
+#include "putils/meta/traits/is_streamable.hpp"
 
 TEST(is_streamable, string) {
     static_assert(putils::is_streamable<std::ostream, std::string>());

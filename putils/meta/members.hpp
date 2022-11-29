@@ -3,35 +3,35 @@
 // stl
 #include <type_traits>
 
-// Use this when MemberType alias doesn't work
-#define PUTILS_MEMBER_TYPE(T, MemberPtr) std::remove_reference_t<decltype(std::declval<T>().*(std::declval<MemberPtr>()))>
+// Use this when member_type alias doesn't work
+#define PUTILS_MEMBER_TYPE(T, member_ptr) std::remove_reference_t<decltype(std::declval<T>().*(std::declval<member_ptr>()))>
 
 namespace putils {
 	namespace detail {
 		template<typename MemberPtr>
-		struct MemberTypeWrapper;
+		struct member_type_wrapper;
 
 		template<typename T, typename Member>
-		struct MemberTypeWrapper<Member T:: *> {
+		struct member_type_wrapper<Member T:: *> {
 			using type = Member;
 		};
 	}
 
 	template<typename MemberPtr>
-	using MemberType = typename detail::MemberTypeWrapper<std::decay_t<MemberPtr>>::type;
+	using member_type = typename detail::member_type_wrapper<std::decay_t<MemberPtr>>::type;
 
 	namespace detail {
 		template<typename MemberPtr>
-		struct ObjectTypeWrapper;
+		struct object_type_wrapper;
 
 		template<typename T, typename Member>
-		struct ObjectTypeWrapper<Member T:: *> {
+		struct object_type_wrapper<Member T:: *> {
 			using type = T;
 		};
 	}
 
 	template<typename MemberPtr>
-	using ObjectType = typename detail::ObjectTypeWrapper<std::decay_t<MemberPtr>>::type;
+	using object_type = typename detail::object_type_wrapper<std::decay_t<MemberPtr>>::type;
 
 	template<typename T, typename U>
 	constexpr std::ptrdiff_t member_offset(U T::* member) noexcept {
