@@ -8,7 +8,7 @@ namespace putils {
     using table = std::tuple<KeyValues...>;
 
     template<typename ...KeyValues>
-    constexpr auto make_table(KeyValues && ... keyValues) noexcept;
+    constexpr auto make_table(KeyValues && ... key_values) noexcept;
 
     // Index with key
     template<typename Table, typename Key>

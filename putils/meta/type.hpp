@@ -5,7 +5,7 @@
 #include <type_traits>
 
 #define putils_typeof(object) std::decay_t<decltype(object)>
-#define putils_wrapped_type(typeObject) typename putils_typeof(typeObject)::wrapped
+#define putils_wrapped_type(type_object) typename putils_typeof(type_object)::wrapped
 
 namespace putils::meta {
     using type_index = std::size_t;

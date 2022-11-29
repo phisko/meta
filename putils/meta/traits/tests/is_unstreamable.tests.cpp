@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "traits/is_unstreamable.hpp"
+#include "putils/meta/traits/is_unstreamable.hpp"
 
 TEST(is_unstreamable, string) {
     static_assert(putils::is_unstreamable<std::istream, std::string>());

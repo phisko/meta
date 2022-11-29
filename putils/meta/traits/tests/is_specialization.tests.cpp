@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "traits/is_specialization.hpp"
+#include "putils/meta/traits/is_specialization.hpp"
 
 TEST(is_specialization, vector) {
     static_assert(putils::is_specialization<std::vector<bool>, std::vector>());

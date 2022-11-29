@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "traits/function_return_type.hpp"
+#include "putils/meta/traits/function_return_type.hpp"
 
 TEST(function_return_type, function) {
     bool f(int i, double d);

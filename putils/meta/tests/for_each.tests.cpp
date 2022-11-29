@@ -2,8 +2,8 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "for_each.hpp"
-#include "table.hpp"
+#include "putils/meta/for_each.hpp"
+#include "putils/meta/table.hpp"
 
 TEST(for_each, for_each_type_constexpr) {
     putils::for_each_type<int, double>([](auto && t) {
@@ -127,7 +127,7 @@ TEST(for_each, tuple_for_each) {
 
 TEST(for_each, tuple_for_each_constexpr_return_bool) {
     constexpr auto ret = [] {
-        std::pair<bool, int> trueAnd84;
+        std::pair<bool, int> true_and_84;
 
         int total = 0;
 
@@ -139,9 +139,9 @@ TEST(for_each, tuple_for_each_constexpr_return_bool) {
             return false;
         });
 
-        trueAnd84.first = ret;
-        trueAnd84.second = total;
-        return trueAnd84;
+        true_and_84.first = ret;
+        true_and_84.second = total;
+        return true_and_84;
     }();
 
     static_assert(ret.first == true);
@@ -165,7 +165,7 @@ TEST(for_each, tuple_for_each_return_bool) {
 
 TEST(for_each, tuple_for_each_constexpr_return_optional) {
     constexpr auto ret = [] {
-        std::pair<int, int> pair84and42;
+        std::pair<int, int> pair_84_and_42;
 
         int total = 0;
 
@@ -177,9 +177,9 @@ TEST(for_each, tuple_for_each_constexpr_return_optional) {
             return std::nullopt;
         });
 
-        pair84and42.first = total;
-        pair84and42.second = *ret;
-        return pair84and42;
+        pair_84_and_42.first = total;
+        pair_84_and_42.second = *ret;
+        return pair_84_and_42;
     }();
 
     static_assert(ret.first == 84);

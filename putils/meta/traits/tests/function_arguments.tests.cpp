@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "traits/function_arguments.hpp"
+#include "putils/meta/traits/function_arguments.hpp"
 
 TEST(function_arguments, function) {
     void f(int i, double d);

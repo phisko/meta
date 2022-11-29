@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "traits/is_function.hpp"
+#include "putils/meta/traits/is_function.hpp"
 
 TEST(is_function, function) {
     void f(int i, double d);

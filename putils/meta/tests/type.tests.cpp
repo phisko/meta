@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "type.hpp"
+#include "putils/meta/type.hpp"
 
 TEST(type, typeof_scalar) {
     int i = 0;

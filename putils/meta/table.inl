@@ -10,9 +10,9 @@ namespace putils {
      */
 
     namespace detail {
-        enum Indexes {
-            KeyPos = 0,
-            ValuePos = 1
+        enum indices {
+            key_pos = 0,
+            value_pos = 1
         };
     }
     
@@ -22,32 +22,32 @@ namespace putils {
 
     namespace detail {
     	template<typename T>
-    	constexpr bool isEqual(const T & lhs, const T & rhs) noexcept {
+    	constexpr bool is_equal(const T & lhs, const T & rhs) noexcept {
     		return lhs == rhs;
     	}
 
-        inline constexpr bool isEqualStrings(std::string_view lhs, std::string_view rhs) noexcept {
+        inline constexpr bool is_equal_strings(std::string_view lhs, std::string_view rhs) noexcept {
             return lhs == rhs;
         }
 
     	template<>
-    	inline constexpr bool isEqual(const char * const & lhs, const char * const & rhs) noexcept {
-            return isEqualStrings(lhs, rhs);
+    	inline constexpr bool is_equal(const char * const & lhs, const char * const & rhs) noexcept {
+            return is_equal_strings(lhs, rhs);
     	}
 
     	template<size_t N, size_t N2>
-    	inline constexpr bool isEqual(const char (&lhs)[N], const char (&rhs)[N2]) noexcept {
-            return isEqualStrings(lhs, rhs);
+    	inline constexpr bool is_equal(const char (&lhs)[N], const char (&rhs)[N2]) noexcept {
+            return is_equal_strings(lhs, rhs);
     	}
 
 		template<size_t N>
-		inline constexpr bool isEqual(const char (&lhs)[N], const char * const & rhs) noexcept {
-            return isEqualStrings(lhs, rhs);
+		inline constexpr bool is_equal(const char (&lhs)[N], const char * const & rhs) noexcept {
+            return is_equal_strings(lhs, rhs);
 		}
 
 		template<size_t N>
-		inline constexpr bool isEqual(const char * const & lhs, const char (&rhs)[N]) noexcept {
-            return isEqualStrings(lhs, rhs);
+		inline constexpr bool is_equal(const char * const & lhs, const char (&rhs)[N]) noexcept {
+            return is_equal_strings(lhs, rhs);
 		}
 
         template<std::size_t KPos, std::size_t VPos, typename Key, typename Table, typename Func, std::size_t ...Is>
@@ -60,9 +60,9 @@ namespace putils {
         constexpr void get_value(Key && key, Table && table, Func && func, std::index_sequence<I, Is...>) noexcept {
             auto && pair = std::get<I>(table);
 
-			using KeyType = putils_typeof(std::get<KPos>(pair));
-			if constexpr (std::is_same<KeyType, putils_typeof(key)>::value) {
-				if (isEqual(std::get<KPos>(pair), key)) {
+			using key_type = putils_typeof(std::get<KPos>(pair));
+			if constexpr (std::is_same<key_type, putils_typeof(key)>::value) {
+				if (is_equal(std::get<KPos>(pair), key)) {
                     auto && value = std::get<VPos>(pair);
 					func(FWD(value));
 					return;
@@ -85,7 +85,7 @@ namespace putils {
 	
 	template<typename Table, typename Key, typename Func>
 	constexpr void get_value(Table && table, Key && key, Func && func) noexcept {
-		detail::get_value<detail::KeyPos, detail::ValuePos>(FWD(key), FWD(table), FWD(func));
+		detail::get_value<detail::key_pos, detail::value_pos>(FWD(key), FWD(table), FWD(func));
 	}
 
 	template<typename Ret, typename Table, typename Key, typename FinalReturn>
@@ -109,7 +109,7 @@ namespace putils {
 
 	template<typename Table, typename Value, typename Func>
 	constexpr void get_key(Table && table, Value && value, Func && func) noexcept {
-		detail::get_value<detail::ValuePos, detail::KeyPos>(FWD(value), FWD(table), FWD(func));
+		detail::get_value<detail::value_pos, detail::key_pos>(FWD(value), FWD(table), FWD(func));
 	}
    
 	template<typename Ret, typename Table, typename Value, typename FinalReturn>
@@ -150,7 +150,7 @@ namespace putils {
 	}
 
     template<typename ... KeyValues>
-    constexpr auto make_table(KeyValues && ... keyValues) noexcept {
-        return detail::make_table(FWD(keyValues)...);
+    constexpr auto make_table(KeyValues && ... key_values) noexcept {
+        return detail::make_table(FWD(key_values)...);
     }
 }

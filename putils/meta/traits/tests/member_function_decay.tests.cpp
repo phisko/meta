@@ -2,9 +2,9 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "traits/member_function_decay.hpp"
+#include "putils/meta/traits/member_function_decay.hpp"
 
-struct Obj {
+struct obj {
     void f(int, double);
     void fconst(int, double) const;
     void fnoexcept(int, double) noexcept;
@@ -14,24 +14,24 @@ struct Obj {
 };
 
 template<typename T>
-using Result = std::is_same<void (Obj::*)(int, double), putils::member_function_decay<T>>;
+using result = std::is_same<void (obj::*)(int, double), putils::member_function_decay<T>>;
 
 TEST(member_function_decay, normal) {
-    static_assert(Result<decltype(&Obj::f)>());
+    static_assert(result<decltype(&obj::f)>());
     SUCCEED();
 }
 
 TEST(member_function_decay, const) {
-    static_assert(Result<decltype(&Obj::fconst)>());
+    static_assert(result<decltype(&obj::fconst)>());
     SUCCEED();
 }
 
 TEST(member_function_decay, noexcept) {
-    static_assert(Result<decltype(&Obj::fnoexcept)>());
+    static_assert(result<decltype(&obj::fnoexcept)>());
     SUCCEED();
 }
 
 TEST(member_function_decay, const_noexcept) {
-    static_assert(Result<decltype(&Obj::fconstnoexcept)>());
+    static_assert(result<decltype(&obj::fconstnoexcept)>());
     SUCCEED();
 }
