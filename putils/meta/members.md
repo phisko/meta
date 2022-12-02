@@ -2,39 +2,39 @@
 
 Type traits and functions for attribute introspection.
 
-## MemberType
+## member_type
 
 ```cpp
 template<typename MemberPtr>
-using MemberType = ...;
+using member_type = ...;
 ```
 
 Alias for the concrete type of a member pointer. For instance:
 
 ```cpp
-struct A {
+struct a {
     int i = 0;
 };
 ```
 
-`MemberType<decltype(&A::i)>` will be `int`.
+`member_type<decltype(&a::i)>` will be `int`.
 
-## ObjectType
+## object_type
 
 ```cpp
 template<typename MemberPtr>
-using ObjectType = typename detail::ObjectTypeWrapper<std::decay_t<MemberPtr>>::type;
+using object_type = ...;
 ```
 
 Alias for the "parent" type of a member pointer. For instance:
 
 ```cpp
-struct A {
+struct a {
     int i = 0;
 };
 ```
 
-`ObjectType<decltype(&A::i)>` will be `A`.
+`object_type<decltype(&a::i)>` will be `A`.
 
 ## member_offset
 

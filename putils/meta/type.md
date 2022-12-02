@@ -25,7 +25,6 @@ For instance, in an Entity Component System, `Entities` may map their `Component
 
 ```cpp
 #define putils_typeof(object) std::decay_t<decltype(object)>
-#define putils_wrapped_type(typeObject) typename putils_typeof(typeObject)::wrapped
+#define putils_wrapped_type(type_object) typename putils_typeof(type_object)::wrapped
 ```
 These macros are defined to make using `putils::meta::type` objects as `auto` parameters easier.
-
