@@ -5,24 +5,24 @@
 #include "putils/meta/traits/is_function.hpp"
 
 TEST(is_function, function) {
-    void f(int i, double d);
-    static_assert(putils::is_function<decltype(f)>());
-    SUCCEED();
+	void f(int i, double d);
+	static_assert(putils::is_function<decltype(f)>());
+	SUCCEED();
 }
 
 TEST(is_function, noexcept) {
-    void g(int i, double d) noexcept;
-    static_assert(putils::is_function<decltype(g)>());
-    SUCCEED();
+	void g(int i, double d) noexcept;
+	static_assert(putils::is_function<decltype(g)>());
+	SUCCEED();
 }
 
 TEST(is_function, std_function) {
-    const std::function<void(int, double)> f;
-    static_assert(putils::is_function<decltype(f)>());
-    SUCCEED();
+	const std::function<void(int, double)> f;
+	static_assert(putils::is_function<decltype(f)>());
+	SUCCEED();
 }
 
 TEST(is_function, false) {
-    static_assert(!putils::is_function<int>());
-    SUCCEED();
+	static_assert(!putils::is_function<int>());
+	SUCCEED();
 }

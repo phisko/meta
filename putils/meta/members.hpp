@@ -12,7 +12,7 @@ namespace putils {
 		struct member_type_wrapper;
 
 		template<typename T, typename Member>
-		struct member_type_wrapper<Member T:: *> {
+		struct member_type_wrapper<Member T::*> {
 			using type = Member;
 		};
 	}
@@ -25,7 +25,7 @@ namespace putils {
 		struct object_type_wrapper;
 
 		template<typename T, typename Member>
-		struct object_type_wrapper<Member T:: *> {
+		struct object_type_wrapper<Member T::*> {
 			using type = T;
 		};
 	}
@@ -34,7 +34,7 @@ namespace putils {
 	using object_type = typename detail::object_type_wrapper<std::decay_t<MemberPtr>>::type;
 
 	template<typename T, typename U>
-	constexpr std::ptrdiff_t member_offset(U T::* member) noexcept {
-		return (ptrdiff_t)&(reinterpret_cast<T const volatile*>(NULL)->*member);
+	constexpr std::ptrdiff_t member_offset(U T::*member) noexcept {
+		return (ptrdiff_t)&(reinterpret_cast<T const volatile *>(NULL)->*member);
 	}
 }
