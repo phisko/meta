@@ -6,11 +6,9 @@
 
 namespace putils::detail {
 #define SPECIALIZATION(TYPE) \
-	template<typename R, typename ... Args> \
-	struct function_traits< \
-		TYPE \
-	> : std::true_type { \
-		using signature = R(*)(Args...);\
+	template<typename R, typename... Args> \
+	struct function_traits<TYPE> : std::true_type { \
+		using signature = R (*)(Args...); \
 		using return_type = R; \
 		using arguments = std::tuple<Args...>; \
 	};
@@ -18,8 +16,8 @@ namespace putils::detail {
 	template<typename T>
 	struct function_traits : std::false_type {};
 
-	SPECIALIZATION(R(*)(Args...))
-	SPECIALIZATION(R(*)(Args...) noexcept)
+	SPECIALIZATION(R (*)(Args...))
+	SPECIALIZATION(R (*)(Args...) noexcept)
 	SPECIALIZATION(std::function<R(Args...)>)
 #undef SPECIALIZATION
 }
