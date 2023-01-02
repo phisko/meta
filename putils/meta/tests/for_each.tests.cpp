@@ -15,7 +15,8 @@ TEST(for_each, for_each_type_constexpr) {
 TEST(for_each, for_each_type) {
 	auto table = putils::make_table(
 		putils::meta::type<int>(), false,
-		putils::meta::type<double>(), false);
+		putils::meta::type<double>(), false
+	);
 
 	putils::for_each_type<int, double>([&](auto && t) {
 		const auto value = putils::get_value<bool>(table, t);
@@ -45,7 +46,8 @@ TEST(for_each, for_each_type_return_bool) {
 	auto table = putils::make_table(
 		putils::meta::type<int>(), false,
 		putils::meta::type<double>(), false,
-		putils::meta::type<float>(), false);
+		putils::meta::type<float>(), false
+	);
 
 	const auto ret = putils::for_each_type<int, double>([&](auto && t) -> bool {
 		const auto value = putils::get_value<bool>(table, t);
@@ -79,7 +81,8 @@ TEST(for_each, for_each_type_return_optional) {
 	auto table = putils::make_table(
 		putils::meta::type<int>(), false,
 		putils::meta::type<double>(), false,
-		putils::meta::type<float>(), false);
+		putils::meta::type<float>(), false
+	);
 
 	int counter = 0;
 	const auto ret = putils::for_each_type<int, double>([&](auto && t) -> std::optional<int> {

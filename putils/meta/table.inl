@@ -135,14 +135,15 @@ namespace putils {
 	// make_table implementation
 	//
 
-		namespace detail {
+	namespace detail {
 		inline constexpr auto make_table() noexcept { return std::make_tuple(); }
 
 		template<typename Key, typename Value, typename... Args>
 		constexpr auto make_table(Key && key, Value && type, Args &&... args) noexcept {
 			return std::tuple_cat(
 				std::make_tuple(std::make_pair(FWD(key), FWD(type))),
-				detail::make_table(FWD(args)...));
+				detail::make_table(FWD(args)...)
+			);
 		}
 	}
 

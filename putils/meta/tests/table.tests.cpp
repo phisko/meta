@@ -5,11 +5,12 @@
 #include "putils/meta/table.hpp"
 
 class table_constexpr : public ::testing::Test {
-	public:
+public:
 	static constexpr auto table = putils::make_table(
 		"string", putils::meta::type<const char *>(),
 		"int", putils::meta::type<int>(),
-		"float", putils::meta::type<float>());
+		"float", putils::meta::type<float>()
+	);
 };
 
 TEST_F(table_constexpr, size) {
@@ -125,7 +126,7 @@ TEST_F(table_constexpr, get_value_callback_missing) {
 }
 
 class table_mutable : public ::testing::Test {
-	public:
+public:
 	void SetUp() override {
 		table = putils::make_table(42, false);
 	}

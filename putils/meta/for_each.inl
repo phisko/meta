@@ -22,7 +22,8 @@ namespace putils {
 			}
 			if constexpr (is_optional) {
 				return Return{};
-			} else if constexpr (is_bool) {
+			}
+			else if constexpr (is_bool) {
 				return false;
 			}
 		}
@@ -39,7 +40,8 @@ namespace putils {
 
 			if constexpr (is_void) {
 				f(std::get<I>(tuple));
-			} else if constexpr (is_optional || is_bool) {
+			}
+			else if constexpr (is_optional || is_bool) {
 				const auto ret = f(std::get<I>(tuple));
 				if (ret)
 					return ret;

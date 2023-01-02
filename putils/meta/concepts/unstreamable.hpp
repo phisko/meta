@@ -2,7 +2,8 @@
 
 namespace putils {
 	template<typename T, typename S>
-	concept unstreamable = requires(T & obj, S & stream) {
-		stream >> obj;
-	};
+	concept unstreamable =
+		requires(T & obj, S & stream) {
+			stream >> obj;
+		};
 }
