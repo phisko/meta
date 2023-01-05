@@ -23,10 +23,10 @@ namespace putils {
 	//      - bool: will stop iterating when `f` returns true. Returns the result
 	//      - std::optional: will stop iterating when `f` returns a valid optional. Returns the result
 
-	template<typename F, typename... Args>
+	template<typename... Args, typename F>
 	constexpr auto tuple_for_each(std::tuple<Args...> & tuple, F && f) noexcept;
 
-	template<typename F, typename... Args>
+	template<typename... Args, typename F>
 	constexpr auto tuple_for_each(const std::tuple<Args...> & tuple, F && f) noexcept;
 
 	// For each `T` in `Types` call `f(putils::meta::type<T>)`

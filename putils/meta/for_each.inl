@@ -9,8 +9,8 @@
 
 namespace putils {
 	namespace detail {
-		template<typename F, typename Tuple, typename Return = void>
-		constexpr auto tuple_for_each(F && f, Tuple && tuple, std::index_sequence<>) noexcept {
+		template<typename Tuple, typename F, typename Return = void>
+		constexpr auto tuple_for_each(Tuple && tuple, F && f, std::index_sequence<>) noexcept {
 			constexpr bool is_void = std::is_same<Return, void>();
 			constexpr bool is_optional = putils::is_specialization<Return, std::optional>();
 			constexpr bool is_bool = std::is_same<Return, bool>();
@@ -28,8 +28,8 @@ namespace putils {
 			}
 		}
 
-		template<typename F, typename Tuple, typename Return = void, size_t I, size_t... Is>
-		constexpr auto tuple_for_each(F && f, Tuple && tuple, std::index_sequence<I, Is...>) noexcept {
+		template<typename Tuple, typename F, typename Return = void, size_t I, size_t... Is>
+		constexpr auto tuple_for_each(Tuple && tuple, F && f, std::index_sequence<I, Is...>) noexcept {
 			using ReturnType = decltype(f(std::get<I>(tuple)));
 
 			constexpr bool is_void = std::is_same<ReturnType, void>();
@@ -47,18 +47,18 @@ namespace putils {
 					return ret;
 			}
 
-			return detail::tuple_for_each<F, Tuple, ReturnType>(FWD(f), FWD(tuple), std::index_sequence<Is...>());
+			return detail::tuple_for_each<Tuple, F, ReturnType>(FWD(tuple), FWD(f), std::index_sequence<Is...>());
 		}
 	}
 
-	template<typename F, typename... Args>
+	template<typename... Args, typename F>
 	constexpr auto tuple_for_each(std::tuple<Args...> & tuple, F && f) noexcept {
-		return detail::tuple_for_each(std::forward<F>(f), tuple, std::index_sequence_for<Args...>());
+		return detail::tuple_for_each(tuple, FWD(f), std::index_sequence_for<Args...>());
 	}
 
-	template<typename F, typename... Args>
+	template<typename... Args, typename F>
 	constexpr auto tuple_for_each(const std::tuple<Args...> & tuple, F && f) noexcept {
-		return detail::tuple_for_each(std::forward<F>(f), tuple, std::index_sequence_for<Args...>());
+		return detail::tuple_for_each(tuple, FWD(f), std::index_sequence_for<Args...>());
 	}
 
 	template<typename... Types, typename Func>
