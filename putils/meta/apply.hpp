@@ -3,6 +3,9 @@
 // stl
 #include <type_traits>
 
+// meta
+#include "putils/meta/fwd.hpp"
+
 namespace putils {
 	namespace detail {
 		template<typename F, class Tuple, std::size_t... Is>
@@ -13,11 +16,11 @@ namespace putils {
 
 	template<typename F, typename... Args>
 	decltype(auto) apply(const std::tuple<Args...> & tuple, F && f) noexcept {
-		return detail::apply(std::forward<F>(f), tuple, std::index_sequence_for<Args...>());
+		return detail::apply(FWD(f), tuple, std::index_sequence_for<Args...>());
 	}
 
 	template<typename F, typename... Args>
 	decltype(auto) apply(std::tuple<Args...> & tuple, F && f) noexcept {
-		return detail::apply(std::forward<F>(f), tuple, std::index_sequence_for<Args...>());
+		return detail::apply(FWD(f), tuple, std::index_sequence_for<Args...>());
 	}
 }
