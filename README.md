@@ -11,7 +11,6 @@ Phisko's metaprogramming utilities.
 
 ## Function-only headers
 
-* [apply](putils/meta/apply.md): C++14 implementation of `std::apply`
 * [for_each](putils/meta/for_each.md): call a function for each element in a tuple, or instantiate a template type and call a static function for each type in a list
 * [fwd](putils/meta/fwd.md): macro which calls `std::forward` for the correct type
 * [has_type](putils/meta/has_type.md): type_trait indicating whether a tuple contains a certain type
