@@ -27,6 +27,7 @@ Phisko's metaprogramming utilities.
 ## Concepts
 
 * [indexable](putils/meta/concepts/indexable.md)
+* [invocable](putils/meta/concepts/invocable.md)
 * [streamable](putils/meta/concepts/streamable.md)
 * [unstreamable](putils/meta/concepts/unstreamable.md)
 
