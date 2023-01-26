@@ -16,6 +16,7 @@ namespace putils::detail {
 	template<typename T>
 	struct function_traits : std::false_type {};
 
+	SPECIALIZATION(R(Args...))
 	SPECIALIZATION(R (*)(Args...))
 	SPECIALIZATION(R (*)(Args...) noexcept)
 	SPECIALIZATION(std::function<R(Args...)>)
