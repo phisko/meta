@@ -1,9 +1,9 @@
 #pragma once
 
 namespace putils {
-	template<typename T>
+	template<typename T, typename Index = int>
 	concept indexable =
-		requires(T obj) {
-			obj[0];
+		requires(T obj, Index index) {
+			obj[index];
 		};
 }
