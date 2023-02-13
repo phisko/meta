@@ -8,7 +8,7 @@ add_subdirectory(cmake_helpers)
 add_library(putils_meta INTERFACE)
 target_include_directories(putils_meta INTERFACE .)
 
-option(PUTILS_META_TESTS "Build meta tests" OFF)
+option(PUTILS_META_TESTS "Build meta tests")
 if (PUTILS_META_TESTS)
     enable_testing()
 
