@@ -1,9 +1,9 @@
 #pragma once
 
 // meta
-#include "details/function_traits.hpp"
+#include "putils/meta/traits/details/function_traits.hpp"
 
 namespace putils {
 	template<typename T>
-	using is_function = detail::function_traits<std::decay_t<T>>;
+	concept callable = detail::function_traits<std::decay_t<T>>::value;
 }

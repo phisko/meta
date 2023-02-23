@@ -9,4 +9,7 @@ namespace putils {
 
 	template<template<typename...> class Template, typename... Args>
 	struct is_specialization<Template<Args...>, Template> : std::true_type {};
+
+	template<typename T, template<typename...> class Template>
+	concept specialization = is_specialization<T, Template>::value;
 }

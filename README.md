@@ -21,25 +21,25 @@ Phisko's metaprogramming utilities.
 ## Type traits
 
 * [indexed_type](putils/meta/traits/indexed_type.md)
-* [is_specialization](putils/meta/traits/is_specialization.md)
 
 ## Concepts
 
+* [callable](putils/meta/traits/callable.md)
 * [indexable](putils/meta/concepts/indexable.md)
 * [invocable](putils/meta/concepts/invocable.md)
+* [member_function_ptr](putils/meta/concepts/member_function_ptr.md)
+* [specialization](putils/meta/concepts/specialization.md)
 * [streamable](putils/meta/concepts/streamable.md)
 * [unstreamable](putils/meta/concepts/unstreamable.md)
 
 ### Function traits
 
-* [is_function](putils/meta/traits/is_function.md)
 * [function_signature](putils/meta/traits/function_signature.md)
 * [function_arguments](putils/meta/traits/function_arguments.md)
 * [function_return_type](putils/meta/traits/function_return_type.md)
 
 ### Member function traits
 
-* [is_member_function_ptr](putils/meta/traits/is_member_function_ptr.md)
 * [member_function_signature](putils/meta/traits/member_function_signature.md)
 * [member_function_arguments](putils/meta/traits/member_function_arguments.md)
 * [member_function_return_type](putils/meta/traits/member_function_return_type.md)

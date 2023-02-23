@@ -2,27 +2,27 @@
 #include <gtest/gtest.h>
 
 // meta
-#include "putils/meta/traits/is_function.hpp"
+#include "putils/meta/concepts/callable.hpp"
 
-TEST(is_function, function) {
+TEST(callable, function) {
 	void f(int i, double d);
-	static_assert(putils::is_function<decltype(f)>());
+	static_assert(putils::callable<decltype(f)>);
 	SUCCEED();
 }
 
-TEST(is_function, noexcept) {
-	void g(int i, double d) noexcept;
-	static_assert(putils::is_function<decltype(g)>());
+TEST(callable, noexcept) {
+	void f(int i, double d) noexcept;
+	static_assert(putils::callable<decltype(f)>);
 	SUCCEED();
 }
 
-TEST(is_function, std_function) {
+TEST(callable, std_function) {
 	const std::function<void(int, double)> f;
-	static_assert(putils::is_function<decltype(f)>());
+	static_assert(putils::callable<decltype(f)>);
 	SUCCEED();
 }
 
-TEST(is_function, false) {
-	static_assert(!putils::is_function<int>());
+TEST(callable, false) {
+	static_assert(!putils::callable<int>);
 	SUCCEED();
 }
