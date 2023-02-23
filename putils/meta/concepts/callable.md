@@ -1,3 +1,3 @@
-# [is_function](is_function.hpp)
+# [callable](callable.hpp)
 
-Type trait which returns whether a given type is a function or function-like object.
+Concept identifying types that can be called (without any requirements about the arguments or return type).

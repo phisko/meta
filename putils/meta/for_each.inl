@@ -4,15 +4,15 @@
 #include <optional>
 
 // meta
+#include "putils/meta/concepts/specialization.hpp"
 #include "putils/meta/traits/function_return_type.hpp"
-#include "putils/meta/traits/is_specialization.hpp"
 
 namespace putils {
 	namespace detail {
 		template<typename Tuple, typename F, typename Return = void>
 		constexpr auto tuple_for_each(Tuple && tuple, F && f, std::index_sequence<>) noexcept {
 			constexpr bool is_void = std::is_same<Return, void>();
-			constexpr bool is_optional = putils::is_specialization<Return, std::optional>();
+			constexpr bool is_optional = putils::specialization<Return, std::optional>;
 			constexpr bool is_bool = std::is_same<Return, bool>();
 
 			static_assert(is_void || is_optional || is_bool);
@@ -33,7 +33,7 @@ namespace putils {
 			using ReturnType = decltype(f(std::get<I>(tuple)));
 
 			constexpr bool is_void = std::is_same<ReturnType, void>();
-			constexpr bool is_optional = putils::is_specialization<ReturnType, std::optional>();
+			constexpr bool is_optional = putils::specialization<ReturnType, std::optional>;
 			constexpr bool is_bool = std::is_same<ReturnType, bool>();
 
 			static_assert(is_void || is_optional || is_bool, "tuple_for_each callback should return void, std::optional or bool");
