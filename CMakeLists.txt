@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.15)
 project(putils_meta HOMEPAGE_URL "https://github.com/phisko/meta")
 
 set(CMAKE_CXX_STANDARD 20)
