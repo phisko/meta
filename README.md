@@ -24,7 +24,8 @@ Phisko's metaprogramming utilities.
 
 ## Concepts
 
-* [callable](putils/meta/traits/callable.md)
+* [callable](putils/meta/concepts/callable.md)
+* [enumeration](putils/meta/concepts/enumeration.md)
 * [indexable](putils/meta/concepts/indexable.md)
 * [invocable](putils/meta/concepts/invocable.md)
 * [member_function_ptr](putils/meta/concepts/member_function_ptr.md)
