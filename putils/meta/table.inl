@@ -60,13 +60,18 @@ namespace putils {
 		constexpr void get_value(Key && key, Table && table, Func && func, std::index_sequence<I, Is...>) noexcept {
 			auto && pair = std::get<I>(table);
 
+			bool matches = false;
 			using key_type = putils_typeof(std::get<KPos>(pair));
-			if constexpr (std::is_same<key_type, putils_typeof(key)>::value) {
-				if (is_equal(std::get<KPos>(pair), key)) {
-					auto && value = std::get<VPos>(pair);
-					func(FWD(value));
-					return;
-				}
+			using arg_type = putils_typeof(key);
+			if constexpr (std::is_constructible_v<key_type, arg_type>)
+				matches = is_equal(std::get<KPos>(pair), key_type(key));
+			else if constexpr (std::is_constructible_v<arg_type, key_type>)
+				matches = is_equal(key, arg_type(std::get<KPos>(pair)));
+
+			if (matches) {
+				auto && value = std::get<VPos>(pair);
+				func(FWD(value));
+				return;
 			}
 
 			get_value<KPos, VPos>(FWD(key), FWD(table), FWD(func), std::index_sequence<Is...>());
